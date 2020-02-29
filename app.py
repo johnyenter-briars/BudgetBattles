@@ -5,13 +5,11 @@ from flask import render_template
 from APIConnectionService import ApiConnectionService
 from database_service import *
 
+db_operations = DatabaseService()
+
 app = Flask(__name__)
 
 apiService = ApiConnectionService()
-dbConnection = None
-dbService = DatabaseService2()
-
-
 
 @app.route('/')
 @app.route('/username/<name>')
@@ -23,8 +21,8 @@ def hello(name: str = None):
 
 @app.route('/databasetest')
 def db_test():
-    print(dbService.get_user2(100))
-    
+    print(db_operations.get_user(100))
+    print(db_operations.get_user_record(100))
     try:
         return render_template("index.html", username=name)
     except Exception as e:
@@ -36,5 +34,27 @@ def signup():
     print("The email address is '" + email + "'")
     return redirect('/')
 
+def initialize_database() -> sqlite3.Connection:
+    """Create a sqlite3 database stored in memory with two tables to hold
+    users, records and history. Returns the connection to the created database."""
+    with sqlite3.connect("bank_buds.db") as conn:
+        conn.execute("""CREATE TABLE IF NOT EXISTS user(
+            userId INTEGER PRIMARY KEY NOT NULL,
+            userName TEXT NOT NULL,
+            userPass TEXT NOT NULL)""")
+
+        conn.execute("""CREATE TABLE IF NOT EXISTS user_record(
+            rec_id INTEGER REFERENCES user NOT NULL,
+            wins INTEGER NOT NULL,
+            losses INTEGER NOT NULL)""")
+
+        conn.execute("""CREATE TABLE IF NOT EXISTS challenge_history(
+            challenge_id INTEGER NOT NULL,
+            challenge_winner REFERENCES user NOT NULL,
+            challenge_loser REFERENCES user NOT NULL,
+            is_active NUMERIC NOT NULL )""")  
+        return conn 
+
 if __name__ == '__main__':
+    initialize_database()
     app.run()
