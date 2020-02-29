@@ -1,7 +1,10 @@
 import requests
 import json
+import time
+
 
 apiKey = open("apikey.txt").read()
+interval = 25
 
 class CustomerObject():
 
@@ -24,6 +27,30 @@ def create_customer(customer):
   if response.status_code == 201:
     print("Customer Successfully Added")
 
+<<<<<<< HEAD
+class CustomerObject():
+
+  def __init__(self, customerId, customerData):
+    self._customerId = customerId
+    self._customerData = customerData
+    self._customerAccountId = None
+
+
+
+def create_customer(customer):
+  url = 'http://api.reimaginebanking.com/customers?key={0}'.format(apiKey)
+
+  response = requests.post( 
+    url, 
+    data=json.dumps(customer),
+    headers={'content-type':'application/json'},
+  )	
+
+  if response.status_code == 201:
+    print("Customer Successfully Added")
+
+=======
+>>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
   return json.loads(response.text)['objectCreated']['_id']
 
 
@@ -59,6 +86,60 @@ def delete_account(accountId):
   if response.status_code == 204:
     print("Customer account for {0} Successfully Deleted".format(customer_id))
 
+<<<<<<< HEAD
+=======
+def create_withdrawl(accountId :str, amount: int, description: str):
+  url = 'http://api.reimaginebanking.com/accounts/{0}/withdrawals?key={1}'.format(accountId, apiKey)
+
+  withdrawl = {
+    "medium": "balance",
+    "transaction_date": "2020-02-29",
+    "status": "pending",
+    "amount": amount,
+    "description": description
+  }
+
+  response = requests.post( 
+    url, 
+    data=json.dumps(withdrawl),
+    headers={'content-type':'application/json'},
+  )
+  
+  if response.status_code == 201:
+    print("Customer account for {0} added a withdrawl Successfully".format(accountId))
+
+def create_deposit(accountId :str, amount: int, description: str):
+  url = 'http://api.reimaginebanking.com/accounts/{0}/deposits?key={1}'.format(accountId, apiKey)
+
+  withdrawl = {
+    "medium": "balance",
+    "transaction_date": "2020-02-29",
+    "status": "pending",
+    "amount": amount,
+    "description": description
+  }
+
+  response = requests.post( 
+    url, 
+    data=json.dumps(withdrawl),
+    headers={'content-type':'application/json'},
+  )
+  
+  if response.status_code == 201:
+    print("Customer account for {0} added a deposit Successfully".format(accountId))
+
+
+def get_balance(accountId):
+  url = 'http://api.reimaginebanking.com/accounts/{0}?key={1}'.format(accountId, apiKey)
+
+  response = requests.get( 
+    url, 
+    headers={'content-type':'application/json'},
+  )	
+
+  if response.status_code == 200:
+    return json.loads(response.text)['balance']
+>>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
 
 customers = [
   {
@@ -104,6 +185,7 @@ for customer in customers:
 
 
 for customer in customerData:
+<<<<<<< HEAD
   accountId = create_account(customer._customerId, customer._customerData['first_name'], 100, 100)
   
   print("Data: ", accountId)
@@ -114,3 +196,24 @@ for customer in customerData:
 for customer in customerData:
   # delete each customer's account and then their profile
   delete_account(customer._customerAccountId)
+=======
+  accountId = create_account(customer._customerId, customer._customerData['first_name'], 100, 1000)
+  
+  print("Data: ", accountId)
+  customer._customerAccountId = accountId
+
+# add more withdrawls and deposits in here
+for customer in customerData:
+  create_withdrawl(customer._customerAccountId, 100, "McDonalds")
+  time.sleep(interval)
+  print("balance: ", get_balance(customer._customerAccountId))
+
+for customer in customerData:
+  create_deposit(customer._customerAccountId, 500, "McDonalds")
+  time.sleep(interval)
+  print("balance: ", get_balance(customer._customerAccountId))
+
+for customer in customerData:
+  # delete each customer's account and then their profile
+  delete_account(customer._customerAccountId)
+>>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b

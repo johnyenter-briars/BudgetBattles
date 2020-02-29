@@ -2,18 +2,17 @@ from flask import Flask
 from flask import request, redirect
 from flask import render_template
 
-from APIConnectionController import ApiConnectionController
-
+from APIConnectionService import ApiConnectionService
 
 app = Flask(__name__)
 
-apiController = ApiConnectionController()
+apiService = ApiConnectionService()
 
 @app.route('/')
 @app.route('/username/<name>')
 def hello(name: str = None):
-    print(apiController.GetAccountInformation("5e5a180af1bac107157e0b7d").get_balance())
-
+    
+    withdrawls2 = apiService.GetAllWithdrawals("5e5a90faf1bac107157e0c50").get_withdrawals()
     try:
         return render_template("index.html", username=name)
     except Exception as e:
