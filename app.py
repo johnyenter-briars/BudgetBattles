@@ -41,7 +41,6 @@ def db_test():
 def signin():
     username = request.form['username']
     password = request.form['password']
-    print(db_operations.get_user(username))
     if db_operations.get_user(username) == []:
         return redirect('/register')
     else:

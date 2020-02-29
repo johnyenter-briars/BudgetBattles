@@ -27,23 +27,23 @@ class DatabaseService:
             rows = curr.fetchall()
         return rows
 
-    def update_win_loss(self, userId: str, result: bool) -> list:
+    def update_win_loss(self, username: str, result: bool) -> list:
         """ update user win loss record based on result """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()
-            wins = curr.execute("""SELECT wins FROM user_record WHERE rec_id = ?""", (userId,)).fetchall()
-            losses = curr.execute("""SELECT losses FROM user_record WHERE rec_id = ?""", (userId,)).fetchall()
+            wins = curr.execute("""SELECT wins FROM user_record WHERE rec_id = ?""", (username,)).fetchall()
+            losses = curr.execute("""SELECT losses FROM user_record WHERE rec_id = ?""", (username,)).fetchall()
             if result == 1:
                 # win
                 curr.execute(""" UPDATE user_record
                     SET wins = wins + 1
-                    WHERE rec_id = ?""", (userId,))
+                    WHERE rec_id = ?""", (username,))
                 conn.commit()
             elif result == 0:
                 # loss
                 curr.execute(""" UPDATE user_record
                     SET losses = losses + 1
-                    WHERE rec_id = ?""", (userId,))
+                    WHERE rec_id = ?""", (username,))
                 conn.commit()
             else:
                 print("Enter a Value 0 or 1")
@@ -71,7 +71,6 @@ class DatabaseService:
                     (challenge_id, challenge_starter, challenge_opponent, "None", "None", 1))
             conn.commit()
         return challenge_id
-
 
     def update_challenge_status(self, challenge_id: int, result: dict) -> bool:
         """ update challenge by passing in a bool result where key is username and val is 0 or 1 """
