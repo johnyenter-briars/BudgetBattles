@@ -1,0 +1,10 @@
+{% extends "header.html" %}
+{% block content %}
+<div class="container">
+	<form action="/signup" method="post">
+		<input type="text" name="userChallenge"></input>
+		<input type="text" name="challengeId"></input>
+		<input type="submit" value="Challenge!"></input>
+      </form>
+</div>
+{% endblock %}
