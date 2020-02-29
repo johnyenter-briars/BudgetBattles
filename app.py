@@ -2,14 +2,11 @@ from flask import Flask
 
 from flask import request, redirect
 from flask import render_template
-<<<<<<< HEAD
-=======
-from ReportingService import ReportingService
+#from ReportingService import ReportingService
 
->>>>>>> master
 from APIConnectionService import ApiConnectionService
 from database_service import *
-rp = ReportingService()
+#rp = ReportingService()
 
 db_operations = DatabaseService()
 
@@ -55,6 +52,21 @@ def signin():
 def register():
     return render_template("register.html")
 
+@app.route('/route')
+def route():
+    return render_template("challenge.html")
+
+@app.route('/challenge')
+def insertChallenge():
+    challengeStarter = request.form['challengeStarter']
+    challengeOpponent = request.form['challengeOpponent']
+    print(challengeOpponent)
+    print(challengeStarter)
+    chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent)
+    print(db_operations.get_challenge(chall_id))
+    #  print(db_operations.get_challenge(challengeId))
+    #return render_template("home.html")
+
 @app.route('/index')
 def index():
     return render_template("index.html")
@@ -65,8 +77,6 @@ def signup():
     firstName = request.form['firstName']
     username = request.form['username']
     password = request.form['password']
-    user_id = hashlib.sha1(b'combo_str').hexdigest()
-    print(user_id)
     db_operations.add_user(firstName, lastName, username, password)
     print(db_operations.get_user(username))
     return redirect('/')
