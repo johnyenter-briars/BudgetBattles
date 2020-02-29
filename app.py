@@ -1,8 +1,12 @@
 from flask import Flask
+
 from flask import request, redirect
 from flask import render_template
+<<<<<<< HEAD
+=======
 from ReportingService import ReportingService
 
+>>>>>>> master
 from APIConnectionService import ApiConnectionService
 from database_service import *
 rp = ReportingService()
@@ -10,9 +14,7 @@ rp = ReportingService()
 db_operations = DatabaseService()
 
 app = Flask(__name__)
-
-#apiService = ApiConnectionService()
-
+apiService = ApiConnectionService()
 @app.route('/')
 @app.route('/username/<name>')
 def hello(name: str = None):
@@ -38,11 +40,35 @@ def db_test():
         return render_template("index.html", username=name)
     except Exception as e:
         return(str(e))
+        
+@app.route('/signin', methods = ['POST'])
+def signin():
+    username = request.form['username']
+    password = request.form['password']
+    print(db_operations.get_user(username))
+    if db_operations.get_user(username) == []:
+        return redirect('/register')
+    else:
+        return render_template("home.html")
+
+@app.route('/register')
+def register():
+    return render_template("register.html")
+
+@app.route('/index')
+def index():
+    return render_template("index.html")
 
 @app.route('/signup', methods = ['POST'])
 def signup():
-    email = request.form['email']
-    print("The email address is '" + email + "'")
+    lastName = request.form['lastName']
+    firstName = request.form['firstName']
+    username = request.form['username']
+    password = request.form['password']
+    user_id = hashlib.sha1(b'combo_str').hexdigest()
+    print(user_id)
+    db_operations.add_user(firstName, lastName, username, password)
+    print(db_operations.get_user(username))
     return redirect('/')
 
 
@@ -59,12 +85,13 @@ def initialize_database() -> sqlite3.Connection:
     users, records and history. Returns the connection to the created database."""
     with sqlite3.connect("bank_buds.db") as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS user(
-            userId INTEGER PRIMARY KEY NOT NULL,
+            firstName TEXT NOT NULL,
+            lastName TEXT NOT NULL,
             userName TEXT NOT NULL,
             userPass TEXT NOT NULL)""")
 
         conn.execute("""CREATE TABLE IF NOT EXISTS user_record(
-            rec_id INTEGER REFERENCES user NOT NULL,
+            rec_id TEXT REFERENCES user NOT NULL,
             wins INTEGER NOT NULL,
             losses INTEGER NOT NULL)""")
 
