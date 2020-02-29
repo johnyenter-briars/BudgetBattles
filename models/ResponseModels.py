@@ -13,8 +13,8 @@ import json
     "zip": "string"
   }"""
 class GetCustomerInfoResponse():
-	def __init__(self, response_text: requests.models.Response):
-		self._response_data = json.loads(response_text.text)[0]
+	def __init__(self, response: requests.models.Response):
+		self._response_data = json.loads(response.text)[0]
 
 	def get_id(self):
 		return self._response_data['_id']
@@ -35,8 +35,8 @@ class GetCustomerInfoResponse():
   "customer_id": "string"
 }"""
 class GetCustomerAccountResponse():
-	def __init__(self, response_text: requests.models.Response):
-		self._response_data = json.loads(response_text.text)[0]
+	def __init__(self, response: requests.models.Response):
+		self._response_data = json.loads(response.text)[0]
 		
 	def get_id(self):
 		return self._response_data['_id']
