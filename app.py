@@ -20,7 +20,5 @@ def signup():
     print("The email address is '" + email + "'")
     return redirect('/')
 
-
-
 if __name__ == '__main__':
     app.run()
