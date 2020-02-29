@@ -2,11 +2,7 @@ from flask import Flask
 
 from flask import request, redirect
 from flask import render_template
-<<<<<<< HEAD
-=======
 from ReportingService import ReportingService
-
->>>>>>> master
 from APIConnectionService import ApiConnectionService
 from database_service import *
 rp = ReportingService()
