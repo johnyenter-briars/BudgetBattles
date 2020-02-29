@@ -2,8 +2,14 @@ from flask import Flask
 
 from flask import request, redirect
 from flask import render_template
+<<<<<<< HEAD
+=======
+from ReportingService import ReportingService
+
+>>>>>>> master
 from APIConnectionService import ApiConnectionService
 from database_service import *
+rp = ReportingService()
 
 db_operations = DatabaseService()
 
@@ -64,6 +70,15 @@ def signup():
     db_operations.add_user(firstName, lastName, username, password)
     print(db_operations.get_user(username))
     return redirect('/')
+
+
+@app.route('/reportingtest')
+def reporting_test():
+    data = rp.getCurentHistory('5e5a90faf1bac107157e0c50')
+    try:
+        return render_template("index.html", username=name)
+    except Exception as e:
+        return(str(e))
 
 def initialize_database() -> sqlite3.Connection:
     """Create a sqlite3 database stored in memory with two tables to hold
