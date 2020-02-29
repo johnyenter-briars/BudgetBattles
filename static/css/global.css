@@ -91,7 +91,8 @@
   color: #ef3b3a;
 }
 body {
-  background: #84a2c5; /* fallback for old browsers */
+  transition: background-color 0.5s;
+  background: #84a2c5;
   background: -webkit-linear-gradient(
     right,
     rgb(106, 169, 228),
