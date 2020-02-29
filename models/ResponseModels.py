@@ -51,19 +51,11 @@ class GetCustomerAccountResponse():
 		return self._response_data['balance']
 
 	def get_account_number(self):
-<<<<<<< HEAD
-		return self._response_data['account_number']
-=======
 		return self._response_data['_id']
->>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
 
 	def get_customer_id(self): 
 		return self._response_data['customer_id']
 
-<<<<<<< HEAD
-class GetAllWithdrawlsResponse():
-	pass
-=======
 [
   {
     "_id": "string",
@@ -86,7 +78,6 @@ class GetAllWithdrawalsResponse():
 	def get_withdrawal(self, withdrawl_id):
 		return [withdrawal for withdrawal in self._withdrawals if withdrawal['_id']]
 	
->>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
 
 class GetAllDepositsResponse():
 	pass
