@@ -1,20 +1,13 @@
 {% extends "header.html" %}
 {% block content %}
-<div class="container">
-	<p id="test">HELLO {{username}}</p>
-	<form action="/signup" method="post">
-		<input type="text" name="firstname"></input>
-		<input type="text" name="lastname"></input>
-		<input type="text" name="username"></input>
-		<input type="text" name="password"></input>
-		<input type="submit" value="Signup"></input>
-	  </form>
-
-
+<div class="login-page">
+	<div class="form">
+		<p>Login</p>
 	  <form action="/signin" method="post">
-		<input type="text" name="username"></input>
-		<input type="text" name="password"></input>
-		<input type="submit" value="Signin"></input>
+		<input type="text"  placeholder="Username" name="username"></input>
+		<input type="text"  placeholder="Password" name="password"></input>
+		<input type="submit" action="/register" value="Sign In"></input>
+		<div id="button"><a href="register">Don't have an account? Register!</a></div>
 	  </form>
 </div>
 
