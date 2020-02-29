@@ -12,7 +12,7 @@ apiService = ApiConnectionService()
 @app.route('/username/<name>')
 def hello(name: str = None):
     
-    withdrawls2 = apiService.GetAllWithdrawals("5e5a90faf1bac107157e0c50").get_withdrawals()
+    #withdrawls2 = apiService.GetAllWithdrawals("5e5a90faf1bac107157e0c50").get_withdrawals()
     try:
         return render_template("index.html", username=name)
     except Exception as e:
