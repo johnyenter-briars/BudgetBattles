@@ -1,9 +1,11 @@
 import sqlite3
+import hashlib
 import typing
 
 class DatabaseService:
-    
+ 
     def add_user(self, userId: int, userName: str, userPass: str) -> bool:
+        """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
@@ -57,11 +59,46 @@ class DatabaseService:
             rows = curr.fetchall()
         return rows
 
-    def create_challenge(self, conn: sqlite3.Connection, challenge_id: int) -> list:
-        """ initalize a challenge by passing in an id """
-        pass
+    def create_challenge(self, challenge_starter: str, challenge_opponent: str) -> list:
+        """ initalize a challenge by passing in an challenge starter and opponent """
+        with sqlite3.connect("bank_buds.db") as conn:
+            curr = conn.cursor()
+            combo_str = challenge_opponent + challenge_starter
+            challenge_id = hashlib.sha1(b'combo_str').hexdigest()
+            curr.execute(""" INSERT into challenge_history
+                    (challenge_id, challenge_starter, challenge_opponent, 
+                    challenge_winner, challenge_loser, is_active) VALUES (?, ?, ?, ?, ?, ?)""",
+                    (challenge_id, challenge_starter, challenge_opponent, "None", "None", 1))
+            conn.commit()
+        return challenge_id
 
-    def update_challenge_status(self, conn: sqlite3.Connection, result: dict) -> bool:
-        """ update challenge by passing in a bool result if 0 ==> makes current_user loser """
-        pass
+
+    def update_challenge_status(self, challenge_id: int, result: dict) -> bool:
+        """ update challenge by passing in a bool result where key is username and val is 0 or 1 """
+        with sqlite3.connect("bank_buds.db") as conn:
+            for key, value in result.items():
+                if value == 0:
+                    conn.execute(""" UPDATE challenge_history
+                        SET challenge_loser = ?
+                        WHERE challenge_id = ? """, (key, challenge_id))
+                    conn.commit()
+                if value == 1:
+                    conn.execute(""" UPDATE challenge_history
+                        SET challenge_winner = ?,
+                            is_active = ?
+                        WHERE challenge_id = ?""", (key, 0, challenge_id))
+                    conn.commit()
+                else:
+                    print("Values must be 0 or 1")
+        return "Challenge Updated"
+
+    def get_challenge(self, challenge_id: str) -> list:
+        """ given a challenge_id return all that users active challenges """
+        with sqlite3.connect("bank_buds.db") as conn:
+            curr = conn.cursor()
+            curr.execute("""SELECT * FROM challenge_history
+                WHERE challenge_id = ?""", (challenge_id,))
+            rows = curr.fetchall()
+        return rows
+            
 
