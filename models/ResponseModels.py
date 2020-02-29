@@ -56,20 +56,28 @@ class GetCustomerAccountResponse():
 	def get_customer_id(self): 
 		return self._response_data['customer_id']
 
-"""
 [
-	{
-	"medium": "balance",
-	"transaction_date": "2020-02-29",
-	"status": "pending",
-	"amount": 0,
-	"description": "string"
-	}
+  {
+    "_id": "string",
+    "type": "p2p",
+    "transaction_date": "2020-02-29",
+    "status": "pending",
+    "payer_id": "string",
+    "medium": "balance",
+    "amount": 0,
+    "description": "string"
+  }
 ]
-"""
+class GetAllWithdrawalsResponse():
+	def __init__(self, response: requests.models.Response):
+		self._withdrawals = json.loads(response.text)
 
-class GetAllWithdrawlsResponse():
-	pass
+	def get_withdrawlas(self):
+		return self._withdrawals
+
+	def get_withdrawal(self, withdrawl_id):
+		return [withdrawal for withdrawal in self._withdrawals if withdrawal['_id']]
+	
 
 class GetAllDepositsResponse():
 	pass
