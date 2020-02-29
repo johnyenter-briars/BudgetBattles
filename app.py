@@ -16,7 +16,5 @@ def hello(name: str = None):
         return(str(e))
 
 
-
-
 if __name__ == '__main__':
     app.run()
