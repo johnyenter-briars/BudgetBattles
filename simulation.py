@@ -27,30 +27,6 @@ def create_customer(customer):
   if response.status_code == 201:
     print("Customer Successfully Added")
 
-<<<<<<< HEAD
-class CustomerObject():
-
-  def __init__(self, customerId, customerData):
-    self._customerId = customerId
-    self._customerData = customerData
-    self._customerAccountId = None
-
-
-
-def create_customer(customer):
-  url = 'http://api.reimaginebanking.com/customers?key={0}'.format(apiKey)
-
-  response = requests.post( 
-    url, 
-    data=json.dumps(customer),
-    headers={'content-type':'application/json'},
-  )	
-
-  if response.status_code == 201:
-    print("Customer Successfully Added")
-
-=======
->>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
   return json.loads(response.text)['objectCreated']['_id']
 
 
@@ -86,8 +62,6 @@ def delete_account(accountId):
   if response.status_code == 204:
     print("Customer account for {0} Successfully Deleted".format(customer_id))
 
-<<<<<<< HEAD
-=======
 def create_withdrawl(accountId :str, amount: int, description: str):
   url = 'http://api.reimaginebanking.com/accounts/{0}/withdrawals?key={1}'.format(accountId, apiKey)
 
@@ -139,7 +113,6 @@ def get_balance(accountId):
 
   if response.status_code == 200:
     return json.loads(response.text)['balance']
->>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
 
 customers = [
   {
@@ -185,18 +158,6 @@ for customer in customers:
 
 
 for customer in customerData:
-<<<<<<< HEAD
-  accountId = create_account(customer._customerId, customer._customerData['first_name'], 100, 100)
-  
-  print("Data: ", accountId)
-  customer._customerAccountId = accountId
-
-# add more transactions in here
-
-for customer in customerData:
-  # delete each customer's account and then their profile
-  delete_account(customer._customerAccountId)
-=======
   accountId = create_account(customer._customerId, customer._customerData['first_name'], 100, 1000)
   
   print("Data: ", accountId)
@@ -216,4 +177,3 @@ for customer in customerData:
 for customer in customerData:
   # delete each customer's account and then their profile
   delete_account(customer._customerAccountId)
->>>>>>> 8bdf52d26b46e084ff494508fe6b97b375ca128b
