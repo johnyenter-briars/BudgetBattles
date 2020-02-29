@@ -5,8 +5,8 @@ import requests
 import json
 
 class NewCustomerPostResponseObject(object):
-	def __init__(self, response_text):
-		self._response_data = json.loads(response_text)['objectCreated']
+	def __init__(self, response_text: requests.models.Response):
+		self._response_data = json.loads(response_text.text)['objectCreated']
 
 	def get_id(self):
 		return self._response_data['_id']
@@ -36,4 +36,4 @@ response = requests.post(
 	)
 
 if response.status_code == 201:
-	print(NewCustomerPostResponseObject(response.text).get_id())
+	print(NewCustomerPostResponseObject(response).get_id())
