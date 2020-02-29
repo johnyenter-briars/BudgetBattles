@@ -3,7 +3,7 @@ import requests
 import json
 
 
-class ApiConnectionController():
+class ApiConnectionService():
 
     def __init__(self):
         self._apiKey = open("apikey.txt").read()
@@ -31,5 +31,20 @@ class ApiConnectionController():
 
         if response.status_code == 200:
             return GetCustomerAccountResponse(response)
+        else:
+            print(response.status_code)
+
+    def GetAllWithdrawals(self, customer_id):
+        
+        account_id = self.GetAccountInformation(customer_id).get_account_number()
+        
+        url = self._baseurl + "accounts/{0}/withdrawals?key={1}".format(account_id, self._apiKey)
+        response = requests.get( 
+            url, 
+            headers={'content-type':'application/json'},
+        )
+
+        if response.status_code == 200:
+            return GetAllWithdrawalsResponse(response)
         else:
             print(response.status_code)
