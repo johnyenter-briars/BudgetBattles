@@ -56,6 +56,18 @@ class GetCustomerAccountResponse():
 	def get_customer_id(self): 
 		return self._response_data['customer_id']
 
+"""
+[
+	{
+	"medium": "balance",
+	"transaction_date": "2020-02-29",
+	"status": "pending",
+	"amount": 0,
+	"description": "string"
+	}
+]
+"""
+
 class GetAllWithdrawlsResponse():
 	pass
 

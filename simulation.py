@@ -1,7 +1,10 @@
 import requests
 import json
+import time
+
 
 apiKey = open("apikey.txt").read()
+interval = 25
 
 class CustomerObject():
 
@@ -59,6 +62,57 @@ def delete_account(accountId):
   if response.status_code == 204:
     print("Customer account for {0} Successfully Deleted".format(customer_id))
 
+def create_withdrawl(accountId :str, amount: int, description: str):
+  url = 'http://api.reimaginebanking.com/accounts/{0}/withdrawals?key={1}'.format(accountId, apiKey)
+
+  withdrawl = {
+    "medium": "balance",
+    "transaction_date": "2020-02-29",
+    "status": "pending",
+    "amount": amount,
+    "description": description
+  }
+
+  response = requests.post( 
+    url, 
+    data=json.dumps(withdrawl),
+    headers={'content-type':'application/json'},
+  )
+  
+  if response.status_code == 201:
+    print("Customer account for {0} added a withdrawl Successfully".format(accountId))
+
+def create_deposit(accountId :str, amount: int, description: str):
+  url = 'http://api.reimaginebanking.com/accounts/{0}/deposits?key={1}'.format(accountId, apiKey)
+
+  withdrawl = {
+    "medium": "balance",
+    "transaction_date": "2020-02-29",
+    "status": "pending",
+    "amount": amount,
+    "description": description
+  }
+
+  response = requests.post( 
+    url, 
+    data=json.dumps(withdrawl),
+    headers={'content-type':'application/json'},
+  )
+  
+  if response.status_code == 201:
+    print("Customer account for {0} added a deposit Successfully".format(accountId))
+
+
+def get_balance(accountId):
+  url = 'http://api.reimaginebanking.com/accounts/{0}?key={1}'.format(accountId, apiKey)
+
+  response = requests.get( 
+    url, 
+    headers={'content-type':'application/json'},
+  )	
+
+  if response.status_code == 200:
+    return json.loads(response.text)['balance']
 
 customers = [
   {
@@ -104,12 +158,21 @@ for customer in customers:
 
 
 for customer in customerData:
-  accountId = create_account(customer._customerId, customer._customerData['first_name'], 100, 100)
+  accountId = create_account(customer._customerId, customer._customerData['first_name'], 100, 1000)
   
   print("Data: ", accountId)
   customer._customerAccountId = accountId
 
-# add more transactions in here
+# add more withdrawls and deposits in here
+for customer in customerData:
+  create_withdrawl(customer._customerAccountId, 100, "McDonalds")
+  time.sleep(interval)
+  print("balance: ", get_balance(customer._customerAccountId))
+
+for customer in customerData:
+  create_deposit(customer._customerAccountId, 500, "McDonalds")
+  time.sleep(interval)
+  print("balance: ", get_balance(customer._customerAccountId))
 
 for customer in customerData:
   # delete each customer's account and then their profile
