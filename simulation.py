@@ -4,22 +4,30 @@
 import requests
 import json
 
+class NewCustomerPostResponseObject(object):
+	def __init__(self, response_text):
+		self._response_data = json.loads(response_text)['objectCreated']
+
+	def get_id(self):
+		return self._response_data['_id']
+
+customer1 = {
+  "first_name": "john2",
+  "last_name": "doe",
+  "address": {
+    "street_number": "1234",
+    "street_name": "mont",
+    "city": "glen",
+    "state": "IL",
+    "zip": "60025"
+  }
+}
 customerId = '3463784693478'
 apiKey = open("apikey.txt").read()
 
-url = 'http://api.reimaginebanking.com/customers/?key={}'.format(customerId,apiKey)
-payload = {
-  "first_name": "string",
-  "last_name": "string",
-  "address": {
-    "street_number": "string",
-    "street_name": "string",
-    "city": "string",
-    "state": "string",
-    "zip": "string"
-  }
-}
+url = 'http://api.reimaginebanking.com/customers?key={}'.format(apiKey)
 
+payload = customer1
 # Create a Savings Account
 response = requests.post( 
 	url, 
@@ -27,7 +35,5 @@ response = requests.post(
 	headers={'content-type':'application/json'},
 	)
 
-print(response)
-
 if response.status_code == 201:
-	print('account created')
+	print(NewCustomerPostResponseObject(response.text).get_id())
