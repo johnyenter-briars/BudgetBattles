@@ -48,3 +48,18 @@ class ApiConnectionService():
             return GetAllWithdrawalsResponse(response)
         else:
             print(response.status_code)
+    
+    def GetAllDeposits(self, customer_id):
+        
+        account_id = self.GetAccountInformation(customer_id).get_account_number()
+        
+        url = self._baseurl + "accounts/{0}/deposits?key={1}".format(account_id, self._apiKey)
+        response = requests.get( 
+            url, 
+            headers={'content-type':'application/json'},
+        )
+
+        if response.status_code == 200:
+            return GetAllDepositsResponse(response)
+        else:
+            print(response.status_code)

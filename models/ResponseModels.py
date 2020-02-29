@@ -80,6 +80,13 @@ class GetAllWithdrawalsResponse():
 	
 
 class GetAllDepositsResponse():
-	pass
+	def __init__(self, response: requests.models.Response):
+		self._deposits = json.loads(response.text)
+
+	def get_deposits(self):
+		return self._deposits
+
+	def get_deposit(self, withdrawl_id):
+		return [deposit for deposit in self._deposits if deposit['_id']]
 
 
