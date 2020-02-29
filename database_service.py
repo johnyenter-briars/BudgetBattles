@@ -1,9 +1,22 @@
 import sqlite3
 import typing
 
+
+class DatabaseService2:
+
+    def get_user2(self, userId):
+        with sqlite3.connect("bank_buds.db") as con:
+            curr = con.cursor()
+            curr.execute("""SELECT * FROM user
+                WHERE userId = ?""", (userId,))
+            rows = curr.fetchall()
+        return rows
+
+
+
 class DatabaseService:
 
-    def initialize_database() -> sqlite3.Connection:
+    def initialize_database(self) -> sqlite3.Connection:
         """Create a sqlite3 database stored in memory with two tables to hold
         users, records and history. Returns the connection to the created database."""
         conn = sqlite3.connect("bank_buds.db")
@@ -26,7 +39,7 @@ class DatabaseService:
         
         return conn
  
-    def add_user(conn: sqlite3.Connection, userId: int, userName: str, userPass: str) -> bool:
+    def add_user(self, conn: sqlite3.Connection, userId: int, userName: str, userPass: str) -> bool:
         """ register user within system """
         conn.execute("""INSERT INTO user 
             (userId, userName, userPass) VALUES (?, ?, ?)""",
@@ -38,7 +51,7 @@ class DatabaseService:
         conn.commit()
         return f"User {userName} added to the database"
 
-    def get_user(conn: sqlite3.Connection, userId: int) -> list:
+    def get_user(self, conn: sqlite3.Connection, userId: int) -> list:
         """ fetches all information about every user. returns a list
             of tuples with userid, username, userpassword """
         curr = conn.cursor()
@@ -47,7 +60,7 @@ class DatabaseService:
         rows = curr.fetchall()
         return rows
 
-    def update_win_loss(conn: sqlite3.Connection, userId: int, result: bool) -> list:
+    def update_win_loss(self, conn: sqlite3.Connection, userId: int, result: bool) -> list:
         """ update user win loss record based on result """
         curr = conn.cursor()
         wins = curr.execute("""SELECT wins FROM user_record WHERE rec_id = ?""", (userId,)).fetchall()
@@ -69,7 +82,7 @@ class DatabaseService:
 
         return [wins, losses]
 
-    def get_user_record(conn: sqlite3.Connection, recId: int) -> list:
+    def get_user_record(self, conn: sqlite3.Connection, recId: int) -> list:
         """ returns user record given an recordId """
         curr = conn.cursor()
         curr.execute("""SELECT * from user_record
@@ -77,11 +90,11 @@ class DatabaseService:
         rows = curr.fetchall()
         return rows
 
-    def create_challenge(conn: sqlite3.Connection, challenge_id: int) -> list:
+    def create_challenge(self, conn: sqlite3.Connection, challenge_id: int) -> list:
         """ initalize a challenge by passing in an id """
         pass
 
-    def update_challenge_status(conn: sqlite3.Connection, result: dict) -> bool:
+    def update_challenge_status(self, conn: sqlite3.Connection, result: dict) -> bool:
         """ update challenge by passing in a bool result if 0 ==> makes current_user loser """
         pass
 
