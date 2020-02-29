@@ -51,7 +51,7 @@ class GetCustomerAccountResponse():
 		return self._response_data['balance']
 
 	def get_account_number(self):
-		return self._response_data['account_number']
+		return self._response_data['_id']
 
 	def get_customer_id(self): 
 		return self._response_data['customer_id']
@@ -72,7 +72,7 @@ class GetAllWithdrawalsResponse():
 	def __init__(self, response: requests.models.Response):
 		self._withdrawals = json.loads(response.text)
 
-	def get_withdrawlas(self):
+	def get_withdrawals(self):
 		return self._withdrawals
 
 	def get_withdrawal(self, withdrawl_id):
