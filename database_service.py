@@ -4,30 +4,30 @@ import typing
 
 class DatabaseService:
  
-    def add_user(self, userId: int, userName: str, userPass: str) -> bool:
+    def add_user(self, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
-                (userId, userName, userPass) VALUES (?, ?, ?)""",
-                (userId, userName, userPass))
+                (firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?)""",
+                (firstName, lastName, userName, userPass))
             conn.execute("""INSERT INTO user_record
                 (rec_id, wins, losses) VALUES (?, ?, ?)""",
-                (userId, 0, 0))
+                (userName, 0, 0))
             conn.commit()
         return f"User {userName} added to the database"
 
-    def get_user(self, userId: int) -> list:
+    def get_user(self, userName: str) -> list:
         """ fetches all information about every user. returns a list
             of tuples with userid, username, userpassword """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()
             curr.execute("""SELECT * FROM user
-                WHERE userId = ?""", (userId,))
+                WHERE userName = ?""", (userName,))
             rows = curr.fetchall()
         return rows
 
-    def update_win_loss(self, userId: int, result: bool) -> list:
+    def update_win_loss(self, userId: str, result: bool) -> list:
         """ update user win loss record based on result """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()

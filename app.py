@@ -39,8 +39,11 @@ def db_test():
 def signin():
     username = request.form['username']
     password = request.form['password']
-    print("The username address is '" + username + "'" + password)
-    return redirect('/')
+    print(db_operations.get_user(username))
+    if db_operations.get_user(username) == []:
+        return redirect('/register')
+    else:
+        return render_template("home.html")
 
 @app.route('/register')
 def register():
@@ -52,9 +55,14 @@ def index():
 
 @app.route('/signup', methods = ['POST'])
 def signup():
+    lastName = request.form['lastName']
+    firstName = request.form['firstName']
     username = request.form['username']
     password = request.form['password']
-    print("The username address is '" + username + "'" + password)
+    user_id = hashlib.sha1(b'combo_str').hexdigest()
+    print(user_id)
+    db_operations.add_user(firstName, lastName, username, password)
+    print(db_operations.get_user(username))
     return redirect('/')
 
 def initialize_database() -> sqlite3.Connection:
@@ -62,12 +70,13 @@ def initialize_database() -> sqlite3.Connection:
     users, records and history. Returns the connection to the created database."""
     with sqlite3.connect("bank_buds.db") as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS user(
-            userId INTEGER PRIMARY KEY NOT NULL,
+            firstName TEXT NOT NULL,
+            lastName TEXT NOT NULL,
             userName TEXT NOT NULL,
             userPass TEXT NOT NULL)""")
 
         conn.execute("""CREATE TABLE IF NOT EXISTS user_record(
-            rec_id INTEGER REFERENCES user NOT NULL,
+            rec_id TEXT REFERENCES user NOT NULL,
             wins INTEGER NOT NULL,
             losses INTEGER NOT NULL)""")
 
