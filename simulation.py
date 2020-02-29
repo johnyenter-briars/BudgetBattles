@@ -1,39 +1,68 @@
-# This is written for PYTHON 3
-# Don't forget to install requests package
-
 import requests
 import json
 
-class NewCustomerPostResponseObject(object):
-	def __init__(self, response_text: requests.models.Response):
-		self._response_data = json.loads(response_text.text)['objectCreated']
-
-	def get_id(self):
-		return self._response_data['_id']
-
-customer1 = {
-  "first_name": "john2",
-  "last_name": "doe",
-  "address": {
-    "street_number": "1234",
-    "street_name": "mont",
-    "city": "glen",
-    "state": "IL",
-    "zip": "60025"
-  }
-}
-customerId = '3463784693478'
 apiKey = open("apikey.txt").read()
 
-url = 'http://api.reimaginebanking.com/customers?key={}'.format(apiKey)
+def create_customer(customer):
+  url = 'http://api.reimaginebanking.com/customers?key={}'.format(apiKey)
 
-payload = customer1
-# Create a Savings Account
-response = requests.post( 
+  response = requests.post( 
 	url, 
-	data=json.dumps(payload),
+	data=json.dumps(customer),
 	headers={'content-type':'application/json'},
-	)
+)	
 
-if response.status_code == 201:
-	print(NewCustomerPostResponseObject(response).get_id())
+  if response.status_code == 201:
+    print("Customer Successfully Added")
+  
+
+customers = [
+  {
+    "first_name": "Steve",
+    "last_name": "Rogers",
+    "address": {
+      "street_number": "1234",
+      "street_name": "mont",
+      "city": "glen",
+      "state": "IL",
+      "zip": "60025"
+    }
+  },
+  {
+    "first_name": "Tony",
+    "last_name": "Stark",
+    "address": {
+      "street_number": "1234",
+      "street_name": "mont",
+      "city": "glen",
+      "state": "IL",
+      "zip": "60025"
+    }
+  },
+  {
+    "first_name": "Kind",
+    "last_name": "T'Challa",
+    "address": {
+      "street_number": "1234",
+      "street_name": "mont",
+      "city": "glen",
+      "state": "IL",
+      "zip": "60025"
+    }
+  }
+]
+
+for customer in customers:
+	create_customer(customer)
+
+
+for customer in customers:
+	# add an account for each customer	
+	pass
+
+# add more transactions in here
+
+for customer in customers:
+	# delete each customer's account and then their profile
+	pass
+
