@@ -52,7 +52,7 @@ def signin():
     if db_operations.get_user(username) == []:
         return redirect('/register')
     else:
-        return render_template("home.html")
+        return redirect("/home/{0}".format(username))
 
 @app.route('/register')
 def register():
@@ -63,8 +63,19 @@ def route():
     return render_template("challenge.html")
 
 #TEMP ROUTE FOR TESTING - DELETE FOR FINAL PRODUCT
-@app.route('/home')
-def home():
+@app.route('/home/<userName>')
+def home(userName:str = None):
+    print(userName)
+    print(db_operations.get_user(userName))
+
+    user_id = "5e5afcdbf1bac107157e0c8e"
+    opponent_id = "5e5af922f1bac107157e0c7f"
+    rp.generateUserHistory(user_id)
+    rp.generateUserHistory(opponent_id)
+
+    user_1_path = "static/balance_{0}.png".format(user_id)
+    user_2_path = "static/balance_{0}.png".format(opponent_id)
+
     return render_template("home.html")
 
 @app.route('/challenge', methods = ['POST'])
@@ -113,8 +124,7 @@ def customeridtest():
 @app.route('/reportingtest<username>')
 def reporting_test(userName:str = None):
 
-    username = currentUser
-    print(username)
+    print(userName)
     print(db_operations.get_user(username))
 
 
