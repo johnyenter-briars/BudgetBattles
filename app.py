@@ -3,9 +3,10 @@ from flask import Flask
 from flask import request, redirect
 from flask import render_template
 #from ReportingService import ReportingService
-
 from APIConnectionService import ApiConnectionService
 from database_service import *
+
+
 #rp = ReportingService()
 
 db_operations = DatabaseService()
@@ -88,14 +89,17 @@ def signup():
     firstName = request.form['firstName']
     username = request.form['username']
     password = request.form['password']
-    checkCustomer = apiService.SearchForCustomerId(firstName,lastName)
-    if checkCustomer == None:
+    customer_id = apiService.SearchForCustomerId(firstName,lastName)
+    checkAccount = apiService.GetAccountInformation(customer_id)
+    print(customer_id)
+    if customer_id == None:
         return redirect('/error')
-    else:
-        db_operations.add_user(checkCustomer, firstName, lastName, username, password)
-        db_operations.get_user_balance(checkCustomer)
-        print(db_operations.get_user(username))
-        return redirect('/')
+    if checkAccount == None:
+        return redirect('/error')
+    balance = db_operations.get_user_balance(customer_id)
+    db_operations.add_user(customer_id, firstName, lastName, username,password,balance)
+    print(db_operations.get_user(username))
+    return redirect('/')
 
 @app.route('/customeridtest')
 def customeridtest():
@@ -126,7 +130,8 @@ def initialize_database() -> sqlite3.Connection:
             firstName TEXT NOT NULL,
             lastName TEXT NOT NULL,
             userName TEXT NOT NULL,
-            userPass TEXT NOT NULL)""")
+            userPass TEXT NOT NULL,
+            balance INTEGER NOT NULL)""")
 
         conn.execute("""CREATE TABLE IF NOT EXISTS user_record(
             rec_id TEXT REFERENCES user NOT NULL,

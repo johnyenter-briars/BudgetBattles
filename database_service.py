@@ -7,13 +7,13 @@ from APIConnectionService import ApiConnectionService
 
 class DatabaseService:
  
-    def add_user(self, customer_id: str, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
+    def add_user(self, customer_id: str, firstName:str, lastName:str, userName: str, userPass: str, balance: int) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
-                (customer_id, firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?, ?)""",
-                (customer_id, firstName, lastName, userName, userPass))
+                (customer_id, firstName, lastName, userName, userPass, balance) VALUES (?, ?, ?, ?, ?, ?)""",
+                (customer_id, firstName, lastName, userName, userPass, balance))
             conn.execute("""INSERT INTO user_record
                 (rec_id, wins, losses) VALUES (?, ?, ?)""",
                 (userName, 0, 0))
