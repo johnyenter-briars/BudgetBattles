@@ -9,6 +9,24 @@ class ApiConnectionService():
         self._apiKey = open("apikey.txt").read()
         self._baseurl = "http://api.reimaginebanking.com/"
 
+    def GetAllValidOpponents(self, initiator_id):
+        url = self._baseurl + "customers?key={0}".format(self._apiKey)
+        response = requests.get( 
+            url, 
+            headers={'content-type':'application/json'},
+        )
+
+        if response.status_code == 200:
+            customers = json.loads(response.text)
+            target_customers = [
+                customer for customer in customers 
+                if customer['_id'] != initiator_id and self.GetAccountInformation(customer['_id']) != None]
+            return target_customers
+        else:
+            print(response.status_code)
+            return None
+
+
     def SearchForCustomerId(self, customer_first: str, customer_last: str):
         url = self._baseurl + "customers?key={0}".format(self._apiKey)
         response = requests.get( 
@@ -27,8 +45,6 @@ class ApiConnectionService():
         else:
             print(response.status_code)
             return None
-
-
 
     def GetCustomerInformation(self, customer_id: str) -> GetCustomerInfoResponse:
         url = self._baseurl + "customers/{0}?key={1}".format(customer_id, self._apiKey)
@@ -51,6 +67,7 @@ class ApiConnectionService():
         if json.loads(response.text) == []:
             return None
         elif response.status_code == 200:
+            print("This person has an account!")
             return GetCustomerAccountResponse(response)
         else:
             return None

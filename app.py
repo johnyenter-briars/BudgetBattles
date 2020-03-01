@@ -67,16 +67,21 @@ def route():
 def home(userName:str = None):
     print(userName)
     print(db_operations.get_user(userName))
+    customer_id = db_operations.get_user(userName)[0][0]
+    valid_opponents = apiService.GetAllValidOpponents(customer_id)
+    print(valid_opponents)
+    opponent_id = valid_opponents[0]["_id"]
+    
+    # db_operations.create_challenge(userName, )
+    # opponents = db_operations.get_challenge()
 
-    user_id = "5e5afcdbf1bac107157e0c8e"
-    opponent_id = "5e5af922f1bac107157e0c7f"
-    rp.generateUserHistory(user_id)
+    rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
 
-    user_1_path = "static/balance_{0}.png".format(user_id)
-    user_2_path = "static/balance_{0}.png".format(opponent_id)
+    user_1_path = "/static/balance_{0}.png".format(customer_id)
+    user_2_path = "/static/withdrawal_{0}.png".format(customer_id)
 
-    return render_template("home.html")
+    return render_template("home.html", user_withdrawal_graph= user_1_path, user_balance_graph=user_2_path)
 
 @app.route('/challenge', methods = ['POST'])
 def challenge():
