@@ -34,6 +34,7 @@ class ReportingService:
         transactions.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[2])), reverse=False)
        
         for transaction in transactions:
+            print(transaction)
             if transaction['type'] == 'deposit':
                 currentBalance+=transaction['amount']
             elif transaction['type'] == 'withdrawal':
