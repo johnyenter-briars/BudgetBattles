@@ -56,7 +56,10 @@ class ReportingService:
             amounts.append(element['amount'])
             dates.append(element['transaction_date'])
         plt.figure(figsize=(15,10))
-        plt.plot(dates,amounts)
+        ax = plt.axes()
+        ax.set_facecolor("#bed1bc")
+        ax.set_alpha(0.5)
+        plt.plot(dates,amounts, color = '#042b00')
 
         plt.xlabel('Dates')
         plt.ylabel(type+' Amount ($)')
@@ -73,7 +76,10 @@ class ReportingService:
             dates.append(element[1])
         
         plt.figure(figsize=(15,10))
-        plt.plot(dates,amounts)
+        ax = plt.axes()
+        ax.set_facecolor("#bed1bc")
+        ax.set_alpha(0.5)
+        plt.plot(dates,amounts, color = '#042b00')
         plt.xlabel('Dates')
         plt.ylabel('Balance Amount ($)')
         plt.savefig('static/graphs/balance_' +user_id+'.png', bbox_inches='tight', pad_inches = 0)
