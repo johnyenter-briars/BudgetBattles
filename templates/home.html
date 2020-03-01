@@ -66,9 +66,11 @@
       </a>
     </div>
     <div class="grid-item">
-      <p>
-        PATRICKS GRAPH HERE
-      </p>
+      {% for challenge in challenge_table %}
+      <tr><td>
+        {{challenge[0]}} </td><td>{{challenge[1]}}</td><td>{{challenge[2]}}
+        </td></tr>
+        {% endfor %}
     </div>
     <div class="grid-item"></div>
   </div>

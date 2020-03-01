@@ -67,8 +67,8 @@ def home(user_name:str = None):
     print(user_name)
     customer_id = db_operations.get_user(user_name)[0][0]
     print(customer_id)
-
     opponents = db_operations.get_user_challenges(user_name)
+    userdata = rp.generateTable(user_name)
     if len(opponents) == 0:
         return redirect("/challenge")
 
@@ -88,7 +88,7 @@ def home(user_name:str = None):
 
     return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
                             opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path, 
-                            user_full_name=user_name, opponent_full_name=opponent_username)
+                            user_full_name=user_name, opponent_full_name=opponent_username, challenge_table=userdata)
 
 @app.route('/home/challenge', methods = ['POST'])
 def challenge():
