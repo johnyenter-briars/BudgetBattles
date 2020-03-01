@@ -9,15 +9,15 @@
 <body>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-      >&times;</a
-    >
+      >&times;
+    </a>
     <img
       src="/static/userimage.png"
       alt="User Image"
       style="width: 75px; height: 75px; padding-left: 40px;"
     />
     <a href="#">Friends</a>
-    <a href="challenge">Challenges</a>
+    <a href="challenge" action="/challenge">Challenges</a>
     <a href="#">Badges</a>
     <a href="#">Settings</a>
     <a href="#">About</a>
@@ -30,59 +30,44 @@
   </div>
   <div class="grid-container">
     <div class="grid-item" id="graph">
-      <img
-        src="{{user_withdrawal_graph}}"
-        alt="balance graph"
-        id="graphpic1"
-      />
-      <h2 class="texthome">This is graph</h2>
+      <a target="_blank" href="{{user_withdrawal_graph}}">
+        <img
+          src="{{user_withdrawal_graph}}"
+          alt="balance graph"
+          id="graphpic1"
+        />
+      </a>
+      <h2 class="texthome">This is graph {{user_full_name}}</h2>
     </div>
     <div class="grid-item" id="graph">
-      <img
-        src="{{user_balance_graph}}"
-        alt="balance graph"
-        id="graphpic1"
-      />
-      <h2 class="texthome">This is graph</h2>
+      <a target="_blank" href="{{user_balance_graph}}">
+        <img src="{{user_balance_graph}}" alt="balance graph" id="graphpic1" />
+      </a>
+      <h2 class="texthome">This is graph {{user_full_name}}</h2>
     </div>
     <div class="grid-item" id="accountinfo">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam,
-        quisquam illum. Sapiente perferendis repudiandae ipsa necessitatibus.
-        Ullam iure numquam aut! Lorem ipsum dolor sit amet consectetur
-        adipisicing elit. Quod earum velit natus nesciunt corrupti doloremque
-        officiis, ad reprehenderit temporibus enim, consectetur perferendis
-        eaque unde voluptate suscipit odit in? Eos error explicabo esse
-        recusandae voluptas autem dolorem magni fugit tempora veritatis iure
-        cumque quae totam labore sunt, accusantium eum architecto sed possimus
-        assumenda quod. Sequi nihil laboriosam esse harum facere velit vitae
-        maxime corrupti. Nulla reiciendis sunt voluptate unde dolorum expedita
-        atque. Voluptatem minima quaerat quasi nostrum magnam, sint sed vitae
-        similique et iusto accusantium doloremque eius assumenda ducimus commodi
-        corporis soluta? Mollitia optio nam debitis at dolore placeat ab!
-        Perspiciatis?
-      </p>
+      <h2 class="texthome">Opponent Balance {{opponent_full_name}}</h2>
+      <a target="_blank" href="{{opponent_balance_path}}">
+        <img
+          src="{{opponent_balance_path}}"
+          alt="balance graph"
+          id="graphpic1"
+        />
+      </a>
     </div>
     <div class="grid-item" id="transactions">
-      <p>
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam modi
-        assumenda corporis quasi quos ipsam ea minima consequuntur explicabo
-        eius.
-      </p>
+      <h2 class="texthome">Opponent Withdrawal {{opponent_full_name}}</h2>
+      <a target="_blank" href="{{opponent_withdrawal_path}}">
+        <img
+          src="{{opponent_withdrawal_path}}"
+          alt="withdrawal graph"
+          id="graphpic1"
+        />
+      </a>
     </div>
     <div class="grid-item">
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dicta
-        quam ea fugiat cum officia libero cupiditate nihil, temporibus saepe at
-        id provident ratione molestias ullam nostrum tempore dolor explicabo
-        minima. Natus officiis quae vero nesciunt minima ut omnis quaerat,
-        voluptatem, beatae delectus non deserunt ipsum ea nulla voluptates ab
-        vitae cum quos sequi iusto ipsa. Ullam tempore consectetur ad
-        accusantium quisquam, laboriosam voluptates natus in rerum quis harum
-        beatae eligendi, sed molestias assumenda voluptatum minus laudantium
-        perspiciatis dolores perferendis quae, sequi illo repellendus.
-        Distinctio culpa doloremque iure porro quo, eius doloribus pariatur,
-        libero animi natus similique, incidunt enim dignissimos?
+        PATRICKS GRAPH HERE
       </p>
     </div>
     <div class="grid-item"></div>
