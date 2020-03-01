@@ -15,7 +15,7 @@ app = Flask(__name__)
 apiService = ApiConnectionService()
 @app.route('/')
 @app.route('/username/<name>')
-def hello(name: str = None):
+def hello(name: str=None):
     try:
         return render_template("index.html", username=name)
     except Exception as e:
