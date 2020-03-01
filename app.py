@@ -82,7 +82,8 @@ def home(userName:str = None):
 def challenge():
     challengeStarter = request.form['challengeStarter']
     challengeOpponent = request.form['challengeOpponent']
-    chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent)
+    goal = request.form['goal']
+    chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent,goal)
     print(db_operations.get_challenge(chall_id))
     return redirect('/home')
 
@@ -165,7 +166,9 @@ def initialize_database() -> sqlite3.Connection:
             challenge_opponent TEXT REFERENCES user NOT NULL,
             challenge_winner TEXT REFERENCES user NOT NULL,
             challenge_loser TEXT REFERENCES user NOT NULL,
-            is_active INTEGER NOT NULL )""")  
+            is_active INTEGER NOT NULL,
+            goal INTEGER NOT NULL)""")
+
         return conn 
 
 if __name__ == '__main__':

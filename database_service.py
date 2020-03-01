@@ -62,7 +62,7 @@ class DatabaseService:
             rows = curr.fetchall()
         return rows
 
-    def create_challenge(self, challenge_starter: str, challenge_opponent: str) -> list:
+    def create_challenge(self, challenge_starter: str, challenge_opponent: str, goal: int) -> list:
         """ initalize a challenge by passing in an challenge starter and opponent """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()
@@ -70,8 +70,8 @@ class DatabaseService:
             challenge_id = abs(hash(challenge_starter + challenge_opponent))
             curr.execute(""" INSERT into challenge_history
                     (challenge_id, challenge_starter, challenge_opponent, 
-                    challenge_winner, challenge_loser, is_active) VALUES (?, ?, ?, ?, ?, ?)""",
-                    (challenge_id, challenge_starter, challenge_opponent, "None", "None", 1))
+                    challenge_winner, challenge_loser, is_active, goal) VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                    (challenge_id, challenge_starter, challenge_opponent, "None", "None", 1, goal))
             conn.commit()
         return challenge_id
 
