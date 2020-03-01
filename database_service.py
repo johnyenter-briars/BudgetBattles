@@ -1,16 +1,16 @@
 import sqlite3
 import hashlib
 import typing
-
+import random
 class DatabaseService:
  
-    def add_user(self, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
+    def add_user(self, customerId:str, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
-                (firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?)""",
-                (firstName, lastName, userName, userPass))
+                (customerId, firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?, ?)""",
+                (customerId, firstName, lastName, userName, userPass))
             conn.execute("""INSERT INTO user_record
                 (rec_id, wins, losses) VALUES (?, ?, ?)""",
                 (userName, 0, 0))
@@ -63,8 +63,8 @@ class DatabaseService:
         """ initalize a challenge by passing in an challenge starter and opponent """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()
-            combo_str = challenge_opponent + challenge_starter
-            challenge_id = hashlib.sha1(b'combo_str').hexdigest()
+            combo = random.randrange(1000, 10000000)
+            challenge_id = abs(hash(challenge_starter + challenge_opponent))
             curr.execute(""" INSERT into challenge_history
                     (challenge_id, challenge_starter, challenge_opponent, 
                     challenge_winner, challenge_loser, is_active) VALUES (?, ?, ?, ?, ?, ?)""",
@@ -100,5 +100,14 @@ class DatabaseService:
                 WHERE challenge_id = ?""", (challenge_id,))
             rows = curr.fetchall()
         return rows
-            
 
+    def get_user_challenges(self, username: str) -> list:
+        """ given a username returns all challenges """
+        with sqlite3.connect("bank_buds.db") as conn:
+            curr = conn.cursor()
+            curr.execute("""SELECT * FROM challenge_history
+                INNER JOIN user
+                ON challenge_history.challenge_starter = user.userName
+                WHERE user.userName = ?""", (username,))
+            rows = curr.fetchall()
+        return rows

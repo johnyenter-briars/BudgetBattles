@@ -22,17 +22,22 @@ def hello(name: str = None):
 
 @app.route('/databasetest')
 def db_test():
-    test_dict = {"joe": 0, "nill": 1}
-    #print(db_operations.add_user(100, "hoe", "hoePass"))
-    #print(db_operations.add_user(200, "joe", "joePass"))
-    print(db_operations.get_user(100))
-    print(db_operations.get_user_record(100))
-    chall_id = db_operations.create_challenge("joe", "bill")
-    print(db_operations.get_challenge(chall_id))
-    print("--pre-update above--")
-    print(chall_id)
-    print(db_operations.update_challenge_status(chall_id, test_dict))
-    print(db_operations.get_challenge(chall_id))
+    db_operations.add_user("123","A", "B", "murt", "1234")
+    db_operations.add_user("124","A", "B", "elona", "1234")
+    db_operations.add_user("125","A", "B", "pat", "1234")
+
+    chall_id1 = db_operations.create_challenge("murt", "elona")
+    chall_id2 = db_operations.create_challenge("murt", "pat")
+    chall_id3 = db_operations.create_challenge("elona", "murt")
+    chall_id4 = db_operations.create_challenge("elona", "pat")
+    chall_id5 = db_operations.create_challenge("pat", "murt")
+    chall_id6 = db_operations.create_challenge("pat", "elona")
+    print("--CHALLENGE MURT--")
+    print(db_operations.get_user_challenges("murt"))
+    print("--CHALLENGE ELONA--")
+    print(db_operations.get_user_challenges("elona"))
+    print("--CHALLENGE PAT--")
+    print(db_operations.get_user_challenges("pat"))
     try:
         return render_template("index.html", username=name)
     except Exception as e:
@@ -52,20 +57,22 @@ def signin():
 def register():
     return render_template("register.html")
 
-@app.route('/route')
+@app.route('/challenge')
 def route():
     return render_template("challenge.html")
 
-@app.route('/challenge')
-def insertChallenge():
+#TEMP ROUTE FOR TESTING - DELETE FOR FINAL PRODUCT
+@app.route('/home')
+def home():
+    return render_template("home.html")
+
+@app.route('/challenge', methods = ['POST'])
+def challenge():
     challengeStarter = request.form['challengeStarter']
     challengeOpponent = request.form['challengeOpponent']
-    print(challengeOpponent)
-    print(challengeStarter)
     chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent)
     print(db_operations.get_challenge(chall_id))
-    #  print(db_operations.get_challenge(challengeId))
-    #return render_template("home.html")
+    return redirect('/home')
 
 @app.route('/index')
 def index():
@@ -95,6 +102,7 @@ def initialize_database() -> sqlite3.Connection:
     users, records and history. Returns the connection to the created database."""
     with sqlite3.connect("bank_buds.db") as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS user(
+            customerid TEXT NOT NULL,
             firstName TEXT NOT NULL,
             lastName TEXT NOT NULL,
             userName TEXT NOT NULL,
