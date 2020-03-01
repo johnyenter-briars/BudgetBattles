@@ -115,31 +115,9 @@ def get_balance(accountId):
     return json.loads(response.text)['balance']
 
 customers = [
-  {
-    "first_name": "Natasha",
-    "last_name": "Romanov",
-    "address": {
-      "street_number": "1234",
-      "street_name": "mont",
-      "city": "glen",
-      "state": "IL",
-      "zip": "60025"
-    }
-  },
-  {
-    "first_name": "Bruce",
-    "last_name": "Banner",
-    "address": {
-      "street_number": "1234",
-      "street_name": "mont",
-      "city": "glen",
-      "state": "IL",
-      "zip": "60025"
-    }
-  },
   # {
-  #   "first_name": "Steve",
-  #   "last_name": "Rogers",
+  #   "first_name": "Natasha",
+  #   "last_name": "Romanov",
   #   "address": {
   #     "street_number": "1234",
   #     "street_name": "mont",
@@ -149,8 +127,8 @@ customers = [
   #   }
   # },
   # {
-  #   "first_name": "Tony",
-  #   "last_name": "Stark",
+  #   "first_name": "Bruce",
+  #   "last_name": "Banner",
   #   "address": {
   #     "street_number": "1234",
   #     "street_name": "mont",
@@ -159,17 +137,39 @@ customers = [
   #     "zip": "60025"
   #   }
   # },
-  # {
-  #   "first_name": "King",
-  #   "last_name": "T'Challa",
-  #   "address": {
-  #     "street_number": "1234",
-  #     "street_name": "mont",
-  #     "city": "glen",
-  #     "state": "IL",
-  #     "zip": "60025"
-  #   }
-  # }
+  {
+    "first_name": "Steve",
+    "last_name": "Rogers",
+    "address": {
+      "street_number": "1234",
+      "street_name": "mont",
+      "city": "glen",
+      "state": "IL",
+      "zip": "60025"
+    }
+  },
+  {
+    "first_name": "Tony",
+    "last_name": "Stark",
+    "address": {
+      "street_number": "1234",
+      "street_name": "mont",
+      "city": "glen",
+      "state": "IL",
+      "zip": "60025"
+    }
+  },
+  {
+    "first_name": "King",
+    "last_name": "T'Challa",
+    "address": {
+      "street_number": "1234",
+      "street_name": "mont",
+      "city": "glen",
+      "state": "IL",
+      "zip": "60025"
+    }
+  }
 ]
 
 customerData = []
