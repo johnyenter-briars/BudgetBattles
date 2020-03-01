@@ -31,7 +31,7 @@
   </div>
   <div class="grid-container">
     <div class="grid-item" id="graph">
-      <p class="texthome">Your Withdrawal History {{user_full_name}}</p>
+      <p class="texthome">Your Withdrawal History</p>
       <a target="_blank" href="{{user_withdrawal_graph}}">
         <img
           src="{{user_withdrawal_graph}}"
@@ -41,13 +41,13 @@
       </a>
     </div>
     <div class="grid-item" id="graph">
-      <p class="texthome">Your Balance History {{user_full_name}}</p>
+      <p class="texthome">Your Balance History</p>
       <a target="_blank" href="{{user_balance_graph}}">
         <img src="{{user_balance_graph}}" alt="balance graph" id="graphpic1" />
       </a>
     </div>
     <div class="grid-item" id="accountinfo">
-      <p class="texthome">Your Opponent Balance {{opponent_full_name}}</p>
+      <p class="texthome">{{opponent_full_name}}'s Balance History </p>
       <a target="_blank" href="{{opponent_balance_path}}">
         <img
           src="{{opponent_balance_path}}"
@@ -57,7 +57,7 @@
       </a>
     </div>
     <div class="grid-item" id="transactions">
-      <p class="texthome">Opponent Withdrawal {{opponent_full_name}}</p>
+      <p class="texthome">{{opponent_full_name}}'s Withdrawal History </p>
       <a target="_blank" href="{{opponent_withdrawal_path}}">
         <img
           src="{{opponent_withdrawal_path}}"
