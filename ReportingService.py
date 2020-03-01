@@ -23,13 +23,12 @@ class ReportingService:
 
         self.withdrawals = connection.GetAllWithdrawals(id).get_withdrawals()
         self.deposits = connection.GetAllDeposits(id).get_deposits()
-        self.withdrawals.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[0][2])), reverse=True)
-        self.deposits.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[0][2])), reverse=True)
+        self.withdrawals.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[2])), reverse=False)
+        self.deposits.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[2])), reverse=False)
         
         transactions = transactions+self.withdrawals
         transactions = transactions+self.deposits
-        transactions.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[0][2])), reverse=True)
-
+        transactions.sort(key=lambda x: datetime.date(int(x['transaction_date'].split('-')[0]),int(x['transaction_date'].split('-')[1]),int(x['transaction_date'].split('-')[2])), reverse=False)
         for transaction in transactions:
             if transaction['type'] == 'deposit':
                 currentBalance+=transaction['amount']
@@ -48,6 +47,7 @@ class ReportingService:
         for element in list:
             amounts.append(element['amount'])
             dates.append(element['transaction_date'])
+        plt.figure(figsize=(15,10))
         plt.plot(dates,amounts)
         plt.xlabel('Dates')
         plt.ylabel(type+' Amount ($)')
@@ -61,6 +61,7 @@ class ReportingService:
             print(element)
             amounts.append(element[0])
             dates.append(element[1])
+        plt.figure(figsize=(15,10))
         plt.plot(dates,amounts)
         plt.xlabel('Dates')
         plt.ylabel('Balance Amount ($)')
