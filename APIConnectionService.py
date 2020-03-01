@@ -20,11 +20,13 @@ class ApiConnectionService():
             customers = json.loads(response.text)
             target_customers = [customer for customer in customers if customer['first_name'] == customer_first and customer['last_name'] == customer_last]
             if len(target_customers) == 1:
-                return target_customers[0]
+                return target_customers[0]['_id']
             else:
                 print("Duplicate customers in database!")
+                return None
         else:
             print(response.status_code)
+            return None
 
 
 
