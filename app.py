@@ -2,12 +2,12 @@ from flask import Flask
 
 from flask import request, redirect
 from flask import render_template
-#from ReportingService import ReportingService
+from ReportingService import ReportingService
 from APIConnectionService import ApiConnectionService
 from database_service import *
 
 
-#rp = ReportingService()
+rp = ReportingService()
 
 db_operations = DatabaseService()
 
@@ -52,7 +52,7 @@ def signin():
     if db_operations.get_user(username) == []:
         return redirect('/register')
     else:
-        return render_template("home.html")
+        return redirect("/home/{0}".format(username))
 
 @app.route('/register')
 def register():
@@ -63,9 +63,26 @@ def route():
     return render_template("challenge.html")
 
 #TEMP ROUTE FOR TESTING - DELETE FOR FINAL PRODUCT
-@app.route('/home')
-def home():
-    return render_template("home.html")
+@app.route('/home/<user_name>')
+def home(user_name:str = None):
+    print(user_name)
+    print(db_operations.get_user(user_name))
+    customer_id = db_operations.get_user(user_name)[0][0]
+    valid_opponents = apiService.GetAllValidOpponents(customer_id)
+    print(valid_opponents)
+    opponent_id = valid_opponents[0]["_id"]
+    opponent_username = valid_opponents[0]["first_name"]
+
+    # chlg_id = db_operations.create_challenge(user_name, opponent_username, 300)
+    # opponents = db_operations.get_challenge(chlg_id)
+
+    rp.generateUserHistory(customer_id)
+    rp.generateUserHistory(opponent_id)
+
+    user_1_path = "/static/balance_{0}.png".format(customer_id)
+    user_2_path = "/static/withdrawal_{0}.png".format(customer_id)
+
+    return render_template("home.html", user_withdrawal_graph= user_1_path, user_balance_graph=user_2_path)
 
 @app.route('/challenge', methods = ['POST'])
 def challenge():
@@ -111,10 +128,14 @@ def customeridtest():
     except Exception as e:
         return(str(e))
 
-@app.route('/reportingtest')
-def reporting_test():
-    #data = rp.getCurentHistory('5e5a90faf1bac107157e0c50')
-    #data = rp.getCurentHistory('5e5af922f1bac107157e0c7f')
+@app.route('/reportingtest<username>')
+def reporting_test(userName:str = None):
+
+    print(userName)
+    print(db_operations.get_user(username))
+
+
+
     user_id = "5e5afcdbf1bac107157e0c8e"
     opponent_id = "5e5af922f1bac107157e0c7f"
     rp.generateUserHistory(user_id)
