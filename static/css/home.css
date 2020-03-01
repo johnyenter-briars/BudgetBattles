@@ -1,3 +1,7 @@
+body {
+  background: #4a60b9;
+  background-size: auto;
+}
 .sidenav {
   height: 100%;
   width: 0;
@@ -44,4 +48,24 @@
   .sidenav a {
     font-size: 18px;
   }
+}
+.grid-container {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: auto auto;
+  background-color: #2196f3;
+  padding: 0px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  font-size: 30px;
+  text-align: center;
+}
+#graphpic1 {
+  width: auto;
+  height: 200px;
+}
+.texthome {
+  margin: 5px;
 }
