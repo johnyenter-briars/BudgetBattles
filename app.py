@@ -67,6 +67,14 @@ def signup():
     print(db_operations.get_user(username))
     return redirect('/')
 
+@app.route('/customeridtest')
+def customeridtest():
+    # expected return if you're running on john's api key is: 5e5b17c4f1bac107157e0ca1
+    print(apiService.SearchForCustomerId("Paul", "Blart"))
+    try:
+        return render_template("index.html")
+    except Exception as e:
+        return(str(e))
 
 @app.route('/reportingtest')
 def reporting_test():
