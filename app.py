@@ -87,7 +87,8 @@ def home(user_name:str = None):
 
 
     return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
-                            opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path)
+                            opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path, 
+                            user_full_name=user_name, opponent_full_name=opponent_username)
 
 @app.route('/home/challenge', methods = ['POST'])
 def challenge():

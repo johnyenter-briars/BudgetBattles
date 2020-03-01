@@ -9,8 +9,8 @@
 <body>
   <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
-      >&times;</a
-    >
+      >&times;
+    </a>
     <img
       src="/static/userimage.png"
       alt="User Image"
@@ -37,16 +37,16 @@
           id="graphpic1"
         />
       </a>
-      <h2 class="texthome">This is graph</h2>
+      <h2 class="texthome">This is graph {{user_full_name}}</h2>
     </div>
     <div class="grid-item" id="graph">
       <a target="_blank" href="{{user_balance_graph}}">
         <img src="{{user_balance_graph}}" alt="balance graph" id="graphpic1" />
       </a>
-      <h2 class="texthome">This is graph</h2>
+      <h2 class="texthome">This is graph {{user_full_name}}</h2>
     </div>
     <div class="grid-item" id="accountinfo">
-      <h2 class="texthome">Opponent Balance</h2>
+      <h2 class="texthome">Opponent Balance {{opponent_full_name}}</h2>
       <a target="_blank" href="{{opponent_balance_path}}">
         <img
           src="{{opponent_balance_path}}"
@@ -56,7 +56,7 @@
       </a>
     </div>
     <div class="grid-item" id="transactions">
-      <h2 class="texthome">Opponent Withdrawal</h2>
+      <h2 class="texthome">Opponent Withdrawal {{opponent_full_name}}</h2>
       <a target="_blank" href="{{opponent_withdrawal_path}}">
         <img
           src="{{opponent_withdrawal_path}}"
