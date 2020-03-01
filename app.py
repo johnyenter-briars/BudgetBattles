@@ -70,7 +70,7 @@ def home(user_name:str = None):
     opponent_username = db_operations.get_user_challenges(user_name)[0][2]
     print(opponent_username)
     opponent_id = db_operations.get_user(opponent_username)[0][0]
-    
+
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
 
@@ -85,7 +85,7 @@ def challenge():
     challengeOpponent = request.form['challengeOpponent']
     goal = request.form['goal']
     chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent,goal)
-    return redirect('/home')
+    return redirect("/home/{0}".format(challengeStarter))
 
 @app.route('/index')
 def index():
