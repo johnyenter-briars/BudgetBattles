@@ -67,14 +67,23 @@ def signup():
     print(db_operations.get_user(username))
     return redirect('/')
 
+@app.route('/customeridtest')
+def customeridtest():
+    # expected return if you're running on john's api key is: 5e5b17c4f1bac107157e0ca1
+    print(apiService.SearchForCustomerId("Paul", "Blart"))
+    try:
+        return render_template("index.html")
+    except Exception as e:
+        return(str(e))
 
 @app.route('/reportingtest')
 def reporting_test():
     #data = rp.getCurentHistory('5e5a90faf1bac107157e0c50')
     #data = rp.getCurentHistory('5e5af922f1bac107157e0c7f')
-    data = rp.getCurentHistory('5e5afcdbf1bac107157e0c8e')
+    data = rp.generateUserHistory('5e5afcdbf1bac107157e0c8e')
+
     try:
-        return render_template("index.html", username=name)
+        return render_template("test_reporting.html", path_to_user_image = "", path_to_opponent_image="")
     except Exception as e:
         return(str(e))
 
