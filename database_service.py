@@ -4,7 +4,7 @@ import typing
 import random
 class DatabaseService:
  
-    def add_user(self, customerId:str, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
+    def add_user(self, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """

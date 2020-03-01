@@ -77,6 +77,10 @@ def challenge():
 @app.route('/index')
 def index():
     return render_template("index.html")
+    
+@app.route('/error')
+def error():
+    return render_template("error.html")
 
 @app.route('/signup', methods = ['POST'])
 def signup():
@@ -84,10 +88,22 @@ def signup():
     firstName = request.form['firstName']
     username = request.form['username']
     password = request.form['password']
-    db_operations.add_user(firstName, lastName, username, password)
-    print(db_operations.get_user(username))
-    return redirect('/')
+    checkCustomer = apiService.SearchForCustomerId(firstName,lastName)
+    if checkCustomer == None:
+        return redirect('/error')
+    else:
+        db_operations.add_user(firstName, lastName, username, password)
+        print(db_operations.get_user(username))
+        return redirect('/')
 
+@app.route('/customeridtest')
+def customeridtest():
+    # expected return if you're running on john's api key is: 5e5b17c4f1bac107157e0ca1
+    print(apiService.SearchForCustomerId("Paul", "Blart"))
+    try:
+        return render_template("index.html")
+    except Exception as e:
+        return(str(e))
 
 @app.route('/reportingtest')
 def reporting_test():
