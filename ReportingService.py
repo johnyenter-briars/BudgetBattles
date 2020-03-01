@@ -66,7 +66,7 @@ class ReportingService:
         amounts = []
         dates = []
         for element in list:
-            print(element)
+            # print(element)
             amounts.append(element[0])
             dates.append(element[1])
         plt.figure(figsize=(15,10))
