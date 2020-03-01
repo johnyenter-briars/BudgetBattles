@@ -64,6 +64,7 @@ def route():
 #TEMP ROUTE FOR TESTING - DELETE FOR FINAL PRODUCT
 @app.route('/home/<user_name>')
 def home(user_name:str = None):
+    opponent_list = []
     print(user_name)
     customer_id = db_operations.get_user(user_name)[0][0]
     print(customer_id)
@@ -72,25 +73,32 @@ def home(user_name:str = None):
     if len(opponents) == 0:
         return redirect("/home/challenge")
 
-    opponent_username = opponents[0][2]
-    print(opponent_username)
-
-    something = db_operations.get_user(opponent_username)
-    opponent_id = something[0][0]
-
     rp.generateUserHistory(customer_id)
-    rp.generateUserHistory(opponent_id)
+    for opponent in opponents:
+        # print("opponent:")
+        # print(opponent)
+        opponent_username = opponent[2]
+        opponent_id = db_operations.get_user(opponent_username)[0][0]
+        # print(opponent_id)
+
+        opponent_balance_path = "/static/graphs/balance_{0}.png".format(opponent_id)
+        opponent_withdrawal_path = "/static/graphs/withdrawal_{0}.png".format(opponent_id)
+        rp.generateUserHistory(opponent_id)
+
+        opponent_list.append((opponent_username,opponent_balance_path, opponent_withdrawal_path))
+
 
     user_balance_path = "/static/graphs/balance_{0}.png".format(customer_id)
     user_withdrawal_path = "/static/graphs/withdrawal_{0}.png".format(customer_id)
 
-    opponent_balance_path = "/static/graphs/balance_{0}.png".format(opponent_id)
-    opponent_withdrawal_path = "/static/graphs/withdrawal_{0}.png".format(opponent_id)
+    print(opponent_list)
 
+    # return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
+    #                         opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path, 
+    #                         user_full_name=user_name, opponent_full_name=opponent_username, challenge_table=userdata)
 
     return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
-                            opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path, 
-                            user_full_name=user_name, opponent_full_name=opponent_username, challenge_table=userdata)
+                            opponent_list=opponent_list, challenge_table=userdata)
 
 @app.route('/home/challenge', methods = ['POST'])
 def challenge():
