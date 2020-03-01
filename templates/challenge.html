@@ -1,10 +1,15 @@
 {% extends "header.html" %}
 {% block content %}
-<div class="container">
-	<form action="/signup" method="post">
-		<input type="text" name="userChallenge"></input>
-		<input type="text" name="challengeId"></input>
-		<input type="submit" value="Challenge!"></input>
-      </form>
+<body id="challengebody">
+<div class="login-page">
+	<div class="form">
+			<form action="/home/challenge" method="post">
+			<input type="text" placeholder="Your username" name="challengeStarter"></input>
+			<input type="text" placeholder="Challenger's username" name="challengeOpponent"></input>
+			<input type="int" placeholder="Goal amount to save." name="goal"></input>
+			<input type="submit" action="/home" value="Challenge!"></input>
+		  </form>
+	</div>
 </div>
+</body>
 {% endblock %}

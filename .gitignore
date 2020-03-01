@@ -1,3 +1,4 @@
 apikey.txt
 apikey1.txt
-.vscode
+.vscode/
+__pycache__/

@@ -1,4 +1,14 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+/* --COLORS--
+  lavendar mist   - #e3d8f1
+  background blue - #4a60b9
+  trolley grey    - #818181
+  eerie black     - #1b1725
+  vermilion red   - #E74318
+ */
+html {
+  height: 100%;
+}
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -7,7 +17,7 @@
 .form {
   position: relative;
   z-index: 1;
-  background: #FFFFFF;
+  background: #ffffff;
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
@@ -33,13 +43,15 @@
   width: 100%;
   border: 0;
   padding: 15px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
 }
-.form button:hover,.form button:active,.form button:focus {
+.form button:hover,
+.form button:active,
+.form button:focus {
   background: rgb(106, 169, 228);
 }
 .form .message {
@@ -48,7 +60,7 @@
   font-size: 12px;
 }
 .form .message a {
-  color:rgb(106, 169, 228);
+  color: rgb(106, 169, 228);
   text-decoration: none;
 }
 .form .register-form {
@@ -60,7 +72,8 @@
   max-width: 300px;
   margin: 0 auto;
 }
-.container:before, .container:after {
+.container:before,
+.container:after {
   content: "";
   display: block;
   clear: both;
@@ -85,15 +98,79 @@
   text-decoration: none;
 }
 .container .info span .fa {
-  color: #EF3B3A;
+  color: #ef3b3a;
 }
 body {
-  background: #84a2c5; /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, rgb(106, 169, 228), rgb(106, 169, 228));
-  background: -moz-linear-gradient(right, rgb(106, 169, 228),rgb(106, 169, 228));
+  /* transition: background-color 0.5s;
+  background: #84a2c5;
+  background: -webkit-linear-gradient(
+    right,
+    rgb(106, 169, 228),
+    rgb(106, 169, 228)
+  );
+  background: -moz-linear-gradient(
+    right,
+    rgb(106, 169, 228),
+    rgb(106, 169, 228)
+  );
   background: -o-linear-gradient(right, rgb(106, 169, 228), rgb(106, 169, 228));
   background: linear-gradient(to left, rgb(106, 169, 228), rgb(106, 169, 228));
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale; */
+  background-image: url(/static/loginBG.png);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  transition: background-color 0.5s;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #1b1725;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left 0.5s;
+  padding: 16px;
+}
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
 }

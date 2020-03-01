@@ -1,13 +1,15 @@
 {% extends "header.html" %}
 {% block content %}
-<div class="login-page">
+<div class="login-page" >
 	<div class="form">
+			<h2><img src="/static/bs_small.png" alt="Budget Logo" style="width: 100; height: 100; box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);"></h2>
 		<p>Login</p>
 	  <form action="/signin" method="post">
 		<input type="text"  placeholder="Username" name="username"></input>
-		<input type="text"  placeholder="Password" name="password"></input>
+		<input type="password"  placeholder="Password" name="password"></input>
 		<input type="submit" action="/signin" value="Sign In"></input>
 		<div id="button"><a href="register">Don't have an account? Register!</a></div>
+		<div id="button"><a href="/home/challenge">Start a challenge</a></div>
 	  </form>
 </div>
 
