@@ -2,15 +2,18 @@ import sqlite3
 import hashlib
 import typing
 import random
+from APIConnectionService import ApiConnectionService
+
+
 class DatabaseService:
  
-    def add_user(self, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
+    def add_user(self, customer_id: str, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
-                (firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?)""",
-                (firstName, lastName, userName, userPass))
+                (customer_id, firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?, ?)""",
+                (customer_id, firstName, lastName, userName, userPass))
             conn.execute("""INSERT INTO user_record
                 (rec_id, wins, losses) VALUES (?, ?, ?)""",
                 (userName, 0, 0))
@@ -111,3 +114,9 @@ class DatabaseService:
                 WHERE user.userName = ?""", (username,))
             rows = curr.fetchall()
         return rows
+
+    def get_user_balance(self, customer_id: str) -> int:
+        """ returns the user's balance given a customer id"""
+        apiService = ApiConnectionService()
+        balance = apiService.GetAccountInformation(customer_id).get_balance()
+        return balance

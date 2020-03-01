@@ -92,7 +92,8 @@ def signup():
     if checkCustomer == None:
         return redirect('/error')
     else:
-        db_operations.add_user(firstName, lastName, username, password)
+        db_operations.add_user(checkCustomer, firstName, lastName, username, password)
+        db_operations.get_user_balance(checkCustomer)
         print(db_operations.get_user(username))
         return redirect('/')
 
@@ -121,7 +122,7 @@ def initialize_database() -> sqlite3.Connection:
     users, records and history. Returns the connection to the created database."""
     with sqlite3.connect("bank_buds.db") as conn:
         conn.execute("""CREATE TABLE IF NOT EXISTS user(
-            customerid TEXT NOT NULL,
+            customer_id TEXT NOT NULL,
             firstName TEXT NOT NULL,
             lastName TEXT NOT NULL,
             userName TEXT NOT NULL,
