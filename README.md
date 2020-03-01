@@ -1,3 +1,6 @@
+BudgetBattles HackIllinois 2020
+
+
 ### Dependencies
 
 * Dependencies located in requirements.txt
