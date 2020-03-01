@@ -67,14 +67,16 @@ def home(user_name:str = None):
     print(user_name)
     customer_id = db_operations.get_user(user_name)[0][0]
     print(customer_id)
-
     opponents = db_operations.get_user_challenges(user_name)
+    userdata = rp.generateTable(user_name)
     if len(opponents) == 0:
-        return redirect("/challenge")
+        return redirect("/home/challenge")
 
     opponent_username = opponents[0][2]
     print(opponent_username)
-    opponent_id = db_operations.get_user(opponent_username)[0][0]
+
+    something = db_operations.get_user(opponent_username)
+    opponent_id = something[0][0]
 
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
@@ -88,7 +90,7 @@ def home(user_name:str = None):
 
     return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
                             opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path, 
-                            user_full_name=user_name, opponent_full_name=opponent_username)
+                            user_full_name=user_name, opponent_full_name=opponent_username, challenge_table=userdata)
 
 @app.route('/home/challenge', methods = ['POST'])
 def challenge():
@@ -96,6 +98,7 @@ def challenge():
     challengeOpponent = request.form['challengeOpponent']
     goal = request.form['goal']
     chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent,goal)
+    db_operations.create_challenge(challengeOpponent,challengeStarter,goal)
     return redirect("/home/{0}".format(challengeStarter))
 
 @app.route('/index')
@@ -173,6 +176,8 @@ def initialize_database() -> sqlite3.Connection:
             goal INTEGER NOT NULL)""")
 
         return conn 
+
+
 
 if __name__ == '__main__':
     initialize_database()

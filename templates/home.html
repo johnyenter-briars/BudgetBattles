@@ -17,7 +17,7 @@
       style="width: 75px; height: 75px; padding-left: 40px;"
     />
     <a href="#">Friends</a>
-    <a href="challenge" action="/challenge">Challenges</a>
+    <a href="challenge" action="/home/challenge">Challenges</a>
     <a href="#">Badges</a>
     <a href="#">Settings</a>
     <a href="#">About</a>
@@ -65,10 +65,13 @@
         />
       </a>
     </div>
-    <div class="grid-item">
-      <p>
-        PATRICKS GRAPH HERE
-      </p>
+    <div class="grid-item"><table>
+      <tr><td>Opponent</td><td>Goal</td></tr>
+      {% for challenge in challenge_table %}
+        </td><td>{{challenge[2]}}</td><td>{{challenge[6]}}
+        </td></tr>
+        {% endfor %}
+      </table>
     </div>
     <div class="grid-item"></div>
   </div>
