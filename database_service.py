@@ -62,7 +62,7 @@ class DatabaseService:
             rows = curr.fetchall()
         return rows
 
-    def create_challenge(self, challenge_starter: str, challenge_opponent: str, goal: int) -> list:
+    def create_challenge(self, challenge_starter: str, challenge_opponent: str, goal: int):
         """ initalize a challenge by passing in an challenge starter and opponent """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()

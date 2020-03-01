@@ -63,17 +63,18 @@ def route():
     return render_template("challenge.html")
 
 #TEMP ROUTE FOR TESTING - DELETE FOR FINAL PRODUCT
-@app.route('/home/<userName>')
-def home(userName:str = None):
-    print(userName)
-    print(db_operations.get_user(userName))
-    customer_id = db_operations.get_user(userName)[0][0]
+@app.route('/home/<user_name>')
+def home(user_name:str = None):
+    print(user_name)
+    print(db_operations.get_user(user_name))
+    customer_id = db_operations.get_user(user_name)[0][0]
     valid_opponents = apiService.GetAllValidOpponents(customer_id)
     print(valid_opponents)
     opponent_id = valid_opponents[0]["_id"]
-    
-    # db_operations.create_challenge(userName, )
-    # opponents = db_operations.get_challenge()
+    opponent_username = valid_opponents[0]["first_name"]
+
+    # chlg_id = db_operations.create_challenge(user_name, opponent_username, 300)
+    # opponents = db_operations.get_challenge(chlg_id)
 
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
