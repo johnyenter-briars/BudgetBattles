@@ -57,7 +57,7 @@ def signin():
 def register():
     return render_template("register.html")
 
-@app.route('/challenge')
+@app.route('/home/challenge')
 def route():
     return render_template("challenge.html")
 
@@ -79,7 +79,7 @@ def home(user_name:str = None):
 
     return render_template("home.html", user_withdrawal_graph= user_1_path, user_balance_graph=user_2_path)
 
-@app.route('/challenge', methods = ['POST'])
+@app.route('/home/challenge', methods = ['POST'])
 def challenge():
     challengeStarter = request.form['challengeStarter']
     challengeOpponent = request.form['challengeOpponent']
