@@ -2,12 +2,12 @@ from flask import Flask
 
 from flask import request, redirect
 from flask import render_template
-#from ReportingService import ReportingService
+from ReportingService import ReportingService
 from APIConnectionService import ApiConnectionService
 from database_service import *
 
 
-#rp = ReportingService()
+rp = ReportingService()
 
 db_operations = DatabaseService()
 
@@ -110,10 +110,15 @@ def customeridtest():
     except Exception as e:
         return(str(e))
 
-@app.route('/reportingtest')
-def reporting_test():
-    #data = rp.getCurentHistory('5e5a90faf1bac107157e0c50')
-    #data = rp.getCurentHistory('5e5af922f1bac107157e0c7f')
+@app.route('/reportingtest<username>')
+def reporting_test(userName:str = None):
+
+    username = currentUser
+    print(username)
+    print(db_operations.get_user(username))
+
+
+
     user_id = "5e5afcdbf1bac107157e0c8e"
     opponent_id = "5e5af922f1bac107157e0c7f"
     rp.generateUserHistory(user_id)
