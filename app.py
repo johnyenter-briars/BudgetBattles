@@ -67,17 +67,27 @@ def home(user_name:str = None):
     print(user_name)
     customer_id = db_operations.get_user(user_name)[0][0]
     print(customer_id)
-    opponent_username = db_operations.get_user_challenges(user_name)[0][2]
+
+    opponents = db_operations.get_user_challenges(user_name)
+    if len(opponents) == 0:
+        return redirect("/challenge")
+
+    opponent_username = opponents[0][2]
     print(opponent_username)
     opponent_id = db_operations.get_user(opponent_username)[0][0]
 
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
 
-    user_1_path = "/static/balance_{0}.png".format(customer_id)
-    user_2_path = "/static/withdrawal_{0}.png".format(customer_id)
+    user_balance_path = "/static/balance_{0}.png".format(customer_id)
+    user_withdrawal_path = "/static/withdrawal_{0}.png".format(customer_id)
 
-    return render_template("home.html", user_withdrawal_graph= user_1_path, user_balance_graph=user_2_path)
+    opponent_balance_path = "/static/balance_{0}.png".format(opponent_id)
+    opponent_withdrawal_path = "/static/withdrawal_{0}.png".format(opponent_id)
+
+
+    return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
+                            opponent_withdrawal_path=opponent_withdrawal_path,opponent_balance_path=opponent_balance_path)
 
 @app.route('/home/challenge', methods = ['POST'])
 def challenge():
