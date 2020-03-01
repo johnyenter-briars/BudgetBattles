@@ -73,8 +73,9 @@ def reporting_test():
     #data = rp.getCurentHistory('5e5a90faf1bac107157e0c50')
     #data = rp.getCurentHistory('5e5af922f1bac107157e0c7f')
     data = rp.getCurentHistory('5e5afcdbf1bac107157e0c8e')
+
     try:
-        return render_template("index.html", username=name)
+        return render_template("test_reporting.html", username=name)
     except Exception as e:
         return(str(e))
 
