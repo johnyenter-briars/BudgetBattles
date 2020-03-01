@@ -104,3 +104,9 @@ td {
   font-weight: bolder;
   font-family: "Roboto", sans-serif;
 }
+#badges_separate {
+}
+.badge_icons {
+  height: 120px;
+  width: auto;
+}
