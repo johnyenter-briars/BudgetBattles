@@ -7,7 +7,8 @@ from typing import Any
 import os
 import sys
 
-
+from database_service import *
+db = DatabaseService()
 connection = ApiConnectionService()
 
 
@@ -75,3 +76,20 @@ class ReportingService:
         plt.xlabel('Dates')
         plt.ylabel('Balance Amount ($)')
         plt.savefig('static/balance_' +user_id+'.png')
+
+
+    def generateTable(self, id):
+        #db.update_challenge_status()
+        data = db.get_user_challenges(id)
+        for row in data:
+            print(row)
+        return data
+        
+        
+    
+def main():
+    rs = ReportingService()
+    rs.generateTable('b')
+
+if __name__ == '__main__':
+    main()
