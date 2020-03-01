@@ -3,6 +3,7 @@ import datetime
 connection = ApiConnectionService()
 import matplotlib
 import matplotlib.pyplot as plt
+from scipy import interpolate
 from typing import Any
 import os
 import sys
@@ -13,7 +14,7 @@ class ReportingService:
     def __init__(self):
         self.deposits:Any
         self.withdrawals:Any
-        print()
+        
     def getCurentHistory(self, id):
         transactions = []
         balances = []
@@ -40,6 +41,7 @@ class ReportingService:
         self.generatePlot(self.withdrawals,'withdrawal')
         self.generatePlot(self.deposits,'deposit')
         self.generateBalancePlot(balances)
+
     #generates generalized plot for withdrawals or deposits
     def generatePlot(self,list,type):
         plt.switch_backend('Agg')
@@ -48,10 +50,15 @@ class ReportingService:
         for element in list:
             amounts.append(element['amount'])
             dates.append(element['transaction_date'])
-        plt.plot(dates,amounts)
+
+        f2 = scipy.interpolate.interp1d(x, y, kind = 'cubic')
+
+        xnew = np.linspace(0, 4,30)
+        plt.plot(dates,amounts, )
         plt.xlabel('Dates')
         plt.ylabel(type+' Amount ($)')
         plt.savefig('static/'+type+'.png')
+
     #creates plot for balance over time
     def generateBalancePlot(self, list):
         plt.switch_backend('Agg')
