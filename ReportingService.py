@@ -23,7 +23,6 @@ class ReportingService:
         balances = []
         initialBalance = 100
         currentBalance = initialBalance
-        goalBalance = 69
 
         self.withdrawals = connection.GetAllWithdrawals(id).get_withdrawals()
         self.deposits = connection.GetAllDeposits(id).get_deposits()
@@ -55,14 +54,14 @@ class ReportingService:
         for element in list:
             amounts.append(element['amount'])
             dates.append(element['transaction_date'])
-        plt.figure(figsize=(15,10))
+        plt.figure(figsize=(16,10))
         ax = plt.axes()
         ax.set_facecolor("#bed1bc")
         ax.set_alpha(0.5)
         plt.plot(dates,amounts, color = '#042b00')
-
-        plt.xlabel('Dates')
-        plt.ylabel(type+' Amount ($)')
+        plt.tight_layout()
+        plt.xlabel('Dates', fontsize=30)
+        plt.ylabel(type+' Amount ($)', fontsize=30)
         plt.savefig('static/graphs/'+type+"_"+user_id+'.png', bbox_inches='tight', pad_inches = 0)
 
     #creates plot for balance over time
@@ -75,13 +74,13 @@ class ReportingService:
             amounts.append(element[0])
             dates.append(element[1])
         
-        plt.figure(figsize=(15,10))
+        plt.figure(figsize=(16,10))
         ax = plt.axes()
         ax.set_facecolor("#bed1bc")
         ax.set_alpha(0.5)
         plt.plot(dates,amounts, color = '#042b00')
-        plt.xlabel('Dates')
-        plt.ylabel('Balance Amount ($)')
+        plt.xlabel('Dates', fontsize=30)
+        plt.ylabel('Balance Amount ($)', fontsize=30)
         plt.savefig('static/graphs/balance_' +user_id+'.png', bbox_inches='tight', pad_inches = 0)
 
     def generateTable(self, id):
