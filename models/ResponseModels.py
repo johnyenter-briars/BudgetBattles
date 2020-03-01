@@ -37,7 +37,7 @@ class GetCustomerInfoResponse():
 class GetCustomerAccountResponse():
 	def __init__(self, response: requests.models.Response):
 		self._response_data = json.loads(response.text)[0]
-		
+	
 	def get_id(self):
 		return self._response_data['_id']
 
@@ -56,7 +56,7 @@ class GetCustomerAccountResponse():
 	def get_customer_id(self): 
 		return self._response_data['customer_id']
 
-[
+"""[
   {
     "_id": "string",
     "type": "p2p",
@@ -67,7 +67,7 @@ class GetCustomerAccountResponse():
     "amount": 0,
     "description": "string"
   }
-]
+]"""
 class GetAllWithdrawalsResponse():
 	def __init__(self, response: requests.models.Response):
 		self._withdrawals = json.loads(response.text)
@@ -78,7 +78,17 @@ class GetAllWithdrawalsResponse():
 	def get_withdrawal(self, withdrawl_id):
 		return [withdrawal for withdrawal in self._withdrawals if withdrawal['_id']]
 	
-
+"""[
+  {
+    "_id": "string",
+    "type": "p2p",
+    "transaction_date": "2020-03-01",
+    "status": "pending",
+    "payee_id": "string",
+    "medium": "balance",
+    "description": "string"
+  }
+]"""
 class GetAllDepositsResponse():
 	def __init__(self, response: requests.models.Response):
 		self._deposits = json.loads(response.text)

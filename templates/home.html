@@ -1,60 +1,10 @@
 {% extends "header.html" %} {% block content %}
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    body {
-      font-family: "Lato", sans-serif;
-      transition: background-color 0.5s;
-    }
-
-    .sidenav {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      background-color: #1b1725;
-      overflow-x: hidden;
-      transition: 0.5s;
-      padding-top: 60px;
-    }
-
-    .sidenav a {
-      padding: 8px 8px 8px 32px;
-      text-decoration: none;
-      font-size: 25px;
-      color: #818181;
-      display: block;
-      transition: 0.3s;
-    }
-
-    .sidenav a:hover {
-      color: #f1f1f1;
-    }
-
-    .sidenav .closebtn {
-      position: absolute;
-      top: 0;
-      right: 25px;
-      font-size: 36px;
-      margin-left: 50px;
-    }
-
-    #main {
-      transition: margin-left 0.5s;
-      padding: 16px;
-    }
-    @media screen and (max-height: 450px) {
-      .sidenav {
-        padding-top: 15px;
-      }
-
-      .sidenav a {
-        font-size: 18px;
-      }
-    }
-  </style>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/home.css') }}"
+  />
 </head>
 <body>
   <div id="mySidenav" class="sidenav">
@@ -67,6 +17,7 @@
       style="width: 75px; height: 75px; padding-left: 40px;"
     />
     <a href="#">Friends</a>
+    <a href="challenge">Challenges</a>
     <a href="#">Badges</a>
     <a href="#">Settings</a>
     <a href="#">About</a>
@@ -77,17 +28,76 @@
       >&#9776;</span
     >
   </div>
+  <div class="grid-container">
+    <div class="grid-item" id="graph">
+      <img
+        src="{{user_withdrawal_graph}}"
+        alt="balance graph"
+        id="graphpic1"
+      />
+      <h2 class="texthome">This is graph</h2>
+    </div>
+    <div class="grid-item" id="graph">
+      <img
+        src="{{user_balance_graph}}"
+        alt="balance graph"
+        id="graphpic1"
+      />
+      <h2 class="texthome">This is graph</h2>
+    </div>
+    <div class="grid-item" id="accountinfo">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam,
+        quisquam illum. Sapiente perferendis repudiandae ipsa necessitatibus.
+        Ullam iure numquam aut! Lorem ipsum dolor sit amet consectetur
+        adipisicing elit. Quod earum velit natus nesciunt corrupti doloremque
+        officiis, ad reprehenderit temporibus enim, consectetur perferendis
+        eaque unde voluptate suscipit odit in? Eos error explicabo esse
+        recusandae voluptas autem dolorem magni fugit tempora veritatis iure
+        cumque quae totam labore sunt, accusantium eum architecto sed possimus
+        assumenda quod. Sequi nihil laboriosam esse harum facere velit vitae
+        maxime corrupti. Nulla reiciendis sunt voluptate unde dolorum expedita
+        atque. Voluptatem minima quaerat quasi nostrum magnam, sint sed vitae
+        similique et iusto accusantium doloremque eius assumenda ducimus commodi
+        corporis soluta? Mollitia optio nam debitis at dolore placeat ab!
+        Perspiciatis?
+      </p>
+    </div>
+    <div class="grid-item" id="transactions">
+      <p>
+        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam modi
+        assumenda corporis quasi quos ipsam ea minima consequuntur explicabo
+        eius.
+      </p>
+    </div>
+    <div class="grid-item">
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci dicta
+        quam ea fugiat cum officia libero cupiditate nihil, temporibus saepe at
+        id provident ratione molestias ullam nostrum tempore dolor explicabo
+        minima. Natus officiis quae vero nesciunt minima ut omnis quaerat,
+        voluptatem, beatae delectus non deserunt ipsum ea nulla voluptates ab
+        vitae cum quos sequi iusto ipsa. Ullam tempore consectetur ad
+        accusantium quisquam, laboriosam voluptates natus in rerum quis harum
+        beatae eligendi, sed molestias assumenda voluptatum minus laudantium
+        perspiciatis dolores perferendis quae, sequi illo repellendus.
+        Distinctio culpa doloremque iure porro quo, eius doloribus pariatur,
+        libero animi natus similique, incidunt enim dignissimos?
+      </p>
+    </div>
+    <div class="grid-item"></div>
+  </div>
   <script>
     function openNav() {
-      document.getElementById("mySidenav").style.width = "200px";
-      document.getElementById("main").style.marginLeft = "200px";
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
       document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
     }
 
     function closeNav() {
       document.getElementById("mySidenav").style.width = "0";
       document.getElementById("main").style.marginLeft = "0";
-      document.body.style.backgroundColor = "white";
+      document.body.style.backgroundColor = "#4a60b9";
     }
   </script>
 </body>

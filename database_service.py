@@ -1,16 +1,19 @@
 import sqlite3
 import hashlib
 import typing
+import random
+from APIConnectionService import ApiConnectionService
+
 
 class DatabaseService:
  
-    def add_user(self, firstName:str, lastName:str, userName: str, userPass: str) -> bool:
+    def add_user(self, customer_id: str, firstName:str, lastName:str, userName: str, userPass: str, balance: int) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
-                (firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?)""",
-                (firstName, lastName, userName, userPass))
+                (customer_id, firstName, lastName, userName, userPass, balance) VALUES (?, ?, ?, ?, ?, ?)""",
+                (customer_id, firstName, lastName, userName, userPass, balance))
             conn.execute("""INSERT INTO user_record
                 (rec_id, wins, losses) VALUES (?, ?, ?)""",
                 (userName, 0, 0))
@@ -59,16 +62,16 @@ class DatabaseService:
             rows = curr.fetchall()
         return rows
 
-    def create_challenge(self, challenge_starter: str, challenge_opponent: str) -> list:
+    def create_challenge(self, challenge_starter: str, challenge_opponent: str, goal: int):
         """ initalize a challenge by passing in an challenge starter and opponent """
         with sqlite3.connect("bank_buds.db") as conn:
             curr = conn.cursor()
-            combo_str = challenge_opponent + challenge_starter
-            challenge_id = hashlib.sha1(b'combo_str').hexdigest()
+            combo = random.randrange(1000, 10000000)
+            challenge_id = abs(hash(challenge_starter + challenge_opponent))
             curr.execute(""" INSERT into challenge_history
                     (challenge_id, challenge_starter, challenge_opponent, 
-                    challenge_winner, challenge_loser, is_active) VALUES (?, ?, ?, ?, ?, ?)""",
-                    (challenge_id, challenge_starter, challenge_opponent, "None", "None", 1))
+                    challenge_winner, challenge_loser, is_active, goal) VALUES (?, ?, ?, ?, ?, ?, ?)""",
+                    (challenge_id, challenge_starter, challenge_opponent, "None", "None", 1, goal))
             conn.commit()
         return challenge_id
 
@@ -100,5 +103,20 @@ class DatabaseService:
                 WHERE challenge_id = ?""", (challenge_id,))
             rows = curr.fetchall()
         return rows
-            
 
+    def get_user_challenges(self, username: str) -> list:
+        """ given a username returns all challenges """
+        with sqlite3.connect("bank_buds.db") as conn:
+            curr = conn.cursor()
+            curr.execute("""SELECT * FROM challenge_history
+                INNER JOIN user
+                ON challenge_history.challenge_starter = user.userName
+                WHERE user.userName = ?""", (username,))
+            rows = curr.fetchall()
+        return rows
+
+    def get_user_balance(self, customer_id: str) -> int:
+        """ returns the user's balance given a customer id"""
+        apiService = ApiConnectionService()
+        balance = apiService.GetAccountInformation(customer_id).get_balance()
+        return balance
