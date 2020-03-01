@@ -48,11 +48,12 @@ class ApiConnectionService():
             url, 
             headers={'content-type':'application/json'},
         )
-
-        if response.status_code == 200:
+        if json.loads(response.text) == []:
+            return None
+        elif response.status_code == 200:
             return GetCustomerAccountResponse(response)
         else:
-            print(response.status_code)
+            return None
 
     def GetAllWithdrawals(self, customer_id):
         
