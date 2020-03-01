@@ -18,7 +18,6 @@
     />
     <a href="#">Friends</a>
     <a href="challenge" action="/home/challenge">Challenges</a>
-    <a href="#">Badges</a>
     <a href="#">Settings</a>
     <a href="#">About</a>
     <a href="/">Sign out</a>
@@ -75,7 +74,11 @@
         {% endfor %}
       </table>
     </div>
-    <div class="grid-item"></div>
+    <div class="grid-item" id="badges_separate">
+      <img src="/static/bronze.png" alt="bronze medal" class="badge_icons">
+      <img src="/static/silver.png" alt="silver medal" class="badge_icons">
+      <img src="/static/gold.png" alt="gold medal" class="badge_icons">
+    </div>
   </div>
   <script>
     function openNav() {
