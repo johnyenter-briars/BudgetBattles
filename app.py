@@ -2,12 +2,12 @@ from flask import Flask
 
 from flask import request, redirect
 from flask import render_template
-#from ReportingService import ReportingService
+from ReportingService import ReportingService
 from APIConnectionService import ApiConnectionService
 from database_service import *
 
 
-#rp = ReportingService()
+rp = ReportingService()
 
 db_operations = DatabaseService()
 
