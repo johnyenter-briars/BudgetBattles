@@ -1,4 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+html {
+  height: 100%;
+}
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -91,7 +94,7 @@
   color: #ef3b3a;
 }
 body {
-  transition: background-color 0.5s;
+  /* transition: background-color 0.5s;
   background: #84a2c5;
   background: -webkit-linear-gradient(
     right,
@@ -105,13 +108,15 @@ body {
   );
   background: -o-linear-gradient(right, rgb(106, 169, 228), rgb(106, 169, 228));
   background: linear-gradient(to left, rgb(106, 169, 228), rgb(106, 169, 228));
-  /* background-image: url(/static/web\1920\–\1png); */
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale; */
+  background-image: url(/static/loginBG.png);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
 }
 body {
-  font-family: "Lato", sans-serif;
+  font-family: "Roboto", sans-serif;
   transition: background-color 0.5s;
 }
 
