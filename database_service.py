@@ -6,7 +6,10 @@ from APIConnectionService import ApiConnectionService
 
 
 class DatabaseService:
- 
+    
+    def __init__(self):
+        self._apiConnectionService = ApiConnectionService()
+
     def add_user(self, customer_id: str, firstName:str, lastName:str, userName: str, userPass: str, balance: int) -> bool:
         """ add a user to the database """
         with sqlite3.connect("bank_buds.db") as conn:

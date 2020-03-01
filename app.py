@@ -70,11 +70,13 @@ def home(user_name:str = None):
     opponents = db_operations.get_user_challenges(user_name)
     userdata = rp.generateTable(user_name)
     if len(opponents) == 0:
-        return redirect("/challenge")
+        return redirect("/home/challenge")
 
     opponent_username = opponents[0][2]
     print(opponent_username)
-    opponent_id = db_operations.get_user(opponent_username)[0][0]
+
+    something = db_operations.get_user(opponent_username)
+    opponent_id = something[0][0]
 
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
@@ -96,6 +98,7 @@ def challenge():
     challengeOpponent = request.form['challengeOpponent']
     goal = request.form['goal']
     chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent,goal)
+    db_operations.create_challenge(challengeOpponent,challengeStarter,goal)
     return redirect("/home/{0}".format(challengeStarter))
 
 @app.route('/index')
@@ -173,6 +176,8 @@ def initialize_database() -> sqlite3.Connection:
             goal INTEGER NOT NULL)""")
 
         return conn 
+
+
 
 if __name__ == '__main__':
     initialize_database()
