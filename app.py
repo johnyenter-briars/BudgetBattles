@@ -81,11 +81,11 @@ def home(user_name:str = None):
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
 
-    user_balance_path = "/static/balance_{0}.png".format(customer_id)
-    user_withdrawal_path = "/static/withdrawal_{0}.png".format(customer_id)
+    user_balance_path = "/static/graphs/balance_{0}.png".format(customer_id)
+    user_withdrawal_path = "/static/graphs/withdrawal_{0}.png".format(customer_id)
 
-    opponent_balance_path = "/static/balance_{0}.png".format(opponent_id)
-    opponent_withdrawal_path = "/static/withdrawal_{0}.png".format(opponent_id)
+    opponent_balance_path = "/static/graphs/balance_{0}.png".format(opponent_id)
+    opponent_withdrawal_path = "/static/graphs/withdrawal_{0}.png".format(opponent_id)
 
 
     return render_template("home.html", user_withdrawal_graph=user_balance_path, user_balance_graph=user_withdrawal_path, 
@@ -141,8 +141,8 @@ def reporting_test(userName:str = None):
     rp.generateUserHistory(user_id)
     rp.generateUserHistory(opponent_id)
 
-    user_1_path = "static/balance_{0}.png".format(user_id)
-    user_2_path = "static/balance_{0}.png".format(opponent_id)
+    user_1_path = "static/graphs/balance_{0}.png".format(user_id)
+    user_2_path = "static/graphs/balance_{0}.png".format(opponent_id)
 
     try:
         return render_template("test_reporting.html", path_to_user_image = user_1_path, path_to_opponent_image=user_2_path)
