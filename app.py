@@ -48,7 +48,6 @@ def db_test():
 def signin():
     username = request.form['username']
     password = request.form['password']
-    print(db_operations.get_user(username))
     if db_operations.get_user(username) == []:
         return redirect('/register')
     else:
@@ -66,16 +65,12 @@ def route():
 @app.route('/home/<user_name>')
 def home(user_name:str = None):
     print(user_name)
-    print(db_operations.get_user(user_name))
     customer_id = db_operations.get_user(user_name)[0][0]
-    valid_opponents = apiService.GetAllValidOpponents(customer_id)
-    print(valid_opponents)
-    opponent_id = valid_opponents[0]["_id"]
-    opponent_username = valid_opponents[0]["first_name"]
-
-    # chlg_id = db_operations.create_challenge(user_name, opponent_username, 300)
-    # opponents = db_operations.get_challenge(chlg_id)
-
+    print(customer_id)
+    opponent_username = db_operations.get_user_challenges(user_name)[0][2]
+    print(opponent_username)
+    opponent_id = db_operations.get_user(opponent_username)[0][0]
+    
     rp.generateUserHistory(customer_id)
     rp.generateUserHistory(opponent_id)
 
@@ -90,7 +85,6 @@ def challenge():
     challengeOpponent = request.form['challengeOpponent']
     goal = request.form['goal']
     chall_id = db_operations.create_challenge(challengeStarter,challengeOpponent,goal)
-    print(db_operations.get_challenge(chall_id))
     return redirect('/home')
 
 @app.route('/index')
@@ -109,14 +103,12 @@ def signup():
     password = request.form['password']
     customer_id = apiService.SearchForCustomerId(firstName,lastName)
     checkAccount = apiService.GetAccountInformation(customer_id)
-    print(customer_id)
     if customer_id == None:
         return redirect('/error')
     if checkAccount == None:
         return redirect('/error')
     balance = db_operations.get_user_balance(customer_id)
     db_operations.add_user(customer_id, firstName, lastName, username,password,balance)
-    print(db_operations.get_user(username))
     return redirect('/')
 
 @app.route('/customeridtest')
@@ -130,12 +122,6 @@ def customeridtest():
 
 @app.route('/reportingtest<username>')
 def reporting_test(userName:str = None):
-
-    print(userName)
-    print(db_operations.get_user(username))
-
-
-
     user_id = "5e5afcdbf1bac107157e0c8e"
     opponent_id = "5e5af922f1bac107157e0c7f"
     rp.generateUserHistory(user_id)
