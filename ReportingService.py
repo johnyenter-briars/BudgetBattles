@@ -6,8 +6,8 @@ from scipy import interpolate
 from typing import Any
 import os
 import sys
-
 from database_service import *
+
 db = DatabaseService()
 connection = ApiConnectionService()
 
@@ -63,7 +63,7 @@ class ReportingService:
 
         plt.xlabel('Dates')
         plt.ylabel(type+' Amount ($)')
-        plt.savefig('static/'+type+"_"+user_id+'.png')
+        plt.savefig('static/graphs/'+type+"_"+user_id+'.png', bbox_inches='tight', pad_inches = 0)
 
     #creates plot for balance over time
     def generateBalancePlot(self, list, user_id):
@@ -74,6 +74,7 @@ class ReportingService:
             # print(element)
             amounts.append(element[0])
             dates.append(element[1])
+        
         plt.figure(figsize=(15,10))
         ax = plt.axes()
         ax.set_facecolor("#bed1bc")
@@ -81,8 +82,7 @@ class ReportingService:
         plt.plot(dates,amounts, color = '#042b00')
         plt.xlabel('Dates')
         plt.ylabel('Balance Amount ($)')
-        plt.savefig('static/balance_' +user_id+'.png')
-
+        plt.savefig('static/graphs/balance_' +user_id+'.png', bbox_inches='tight', pad_inches = 0)
 
     def generateTable(self, id):
         #db.update_challenge_status()
@@ -92,7 +92,6 @@ class ReportingService:
         return data
         
         
-    
 def main():
     rs = ReportingService()
     rs.generateTable('b')

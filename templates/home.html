@@ -32,6 +32,7 @@
   </div>
   <div class="grid-container">
     <div class="grid-item" id="graph">
+      <p class="texthome">Your Withdrawal History {{user_full_name}}</p>
       <a target="_blank" href="{{user_withdrawal_graph}}">
         <img
           src="{{user_withdrawal_graph}}"
@@ -39,16 +40,15 @@
           id="graphpic1"
         />
       </a>
-      <h2 class="texthome">This is graph {{user_full_name}}</h2>
     </div>
     <div class="grid-item" id="graph">
+      <p class="texthome">Your Balance History {{user_full_name}}</p>
       <a target="_blank" href="{{user_balance_graph}}">
         <img src="{{user_balance_graph}}" alt="balance graph" id="graphpic1" />
       </a>
-      <h2 class="texthome">This is graph {{user_full_name}}</h2>
     </div>
     <div class="grid-item" id="accountinfo">
-      <h2 class="texthome">Opponent Balance {{opponent_full_name}}</h2>
+      <p class="texthome">Your Opponent Balance {{opponent_full_name}}</p>
       <a target="_blank" href="{{opponent_balance_path}}">
         <img
           src="{{opponent_balance_path}}"
@@ -58,7 +58,7 @@
       </a>
     </div>
     <div class="grid-item" id="transactions">
-      <h2 class="texthome">Opponent Withdrawal {{opponent_full_name}}</h2>
+      <p class="texthome">Opponent Withdrawal {{opponent_full_name}}</p>
       <a target="_blank" href="{{opponent_withdrawal_path}}">
         <img
           src="{{opponent_withdrawal_path}}"
@@ -67,8 +67,8 @@
         />
       </a>
     </div>
-    <div class="grid-item"><table>
-      <tr><td>Opponent</td><td>Goal</td></tr>
+    <div class="grid-item" id="current_battles"><table>
+      <tr id="battles_table"><td>Opponent</td><td>Goal</td></tr>
       {% for challenge in challenge_table %}
         </td><td>{{challenge[2]}}</td><td>{{challenge[6]}}
         </td></tr>
