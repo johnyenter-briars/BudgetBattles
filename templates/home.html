@@ -1,8 +1,44 @@
-{% extends "header.html" %}
-{% block content %}
-<div class="container">
-	<p id="test">HOME</p>
+{% extends "header.html" %} {% block content %}
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/home.css') }}"
+  />
+</head>
+<body>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"
+      >&times;</a
+    >
+    <img
+      src="/static/userimage.png"
+      alt="User Image"
+      style="width: 75px; height: 75px; padding-left: 40px;"
+    />
+    <a href="#">Friends</a>
+    <a href="#">Badges</a>
+    <a href="#">Settings</a>
+    <a href="#">About</a>
+  </div>
 
-</div>
+  <div id="main">
+    <span style="font-size:30px;cursor:pointer" onclick="openNav()"
+      >&#9776;</span
+    >
+  </div>
+  <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+      document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+    }
 
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+      document.body.style.backgroundColor = "white";
+    }
+  </script>
+</body>
 {% endblock %}

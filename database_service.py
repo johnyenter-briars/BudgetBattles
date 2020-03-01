@@ -9,8 +9,8 @@ class DatabaseService:
         with sqlite3.connect("bank_buds.db") as conn:
             """ register user within system """
             conn.execute("""INSERT INTO user 
-                (customerId, firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?, ?)""",
-                (customerId, firstName, lastName, userName, userPass))
+                (firstName, lastName, userName, userPass) VALUES (?, ?, ?, ?)""",
+                (firstName, lastName, userName, userPass))
             conn.execute("""INSERT INTO user_record
                 (rec_id, wins, losses) VALUES (?, ?, ?)""",
                 (userName, 0, 0))

@@ -1,12 +1,14 @@
 <html>
-    <!-- Global style sheet here -->
-    <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
-
-    </head>
-    <body>
-        {% block content %}{% endblock %}
-    </body>
-
-    
+  <!-- Global style sheet here -->
+  <head>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/global.css') }}"
+    />
+    <script src="/scripts/scripts.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+  </body>
 </html>
